@@ -1,7 +1,13 @@
 from django import forms
-from .models import Carpet
+from django.forms import fields
+from .models import Carpet, Brand
 
-class ImageForm(forms.ModelForm):
+class CarpetImageForm(forms.ModelForm):
     class Meta:
         model= Carpet
-        fields= ["name", "image_file"]
+        fields= ["image_file"]
+
+class BrandForm(forms.ModelForm):
+    class Meta:
+        model = Brand
+        fields = ["name", "website"]
