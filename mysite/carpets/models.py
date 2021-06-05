@@ -30,7 +30,7 @@ class Color(models.Model):
 
 class Size(models.Model):
     SHAPE_CHOICES = (
-    (1, 'Rectangle'),
+    ('Rectangle', 'Rectangle'),
     (2, 'Oval'),
     (3, 'Round'),
     )
@@ -51,10 +51,10 @@ class Carpet(models.Model):
     inventory = models.IntegerField(default=0)
 
     def __str__(self):
-        return (f"{self.name}: {str(self.image)} - "
+        return (f"carpet_image: {str(self.image_file)} - "
                 f"{self.color} color of "
-                f"{self.pattern} pattern "
-                f"in the {self.design}")
+                f"in the {self.design} "
+                f"with size {self.size}.")
 
     def in_stock(self):
         return self.inventory > 0
