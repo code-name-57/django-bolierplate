@@ -6,6 +6,8 @@ class Brand(models.Model):
     # Appear as Loloi
     name = models.CharField(max_length=30)
     website = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
 
 class Collections(models.Model):
     # Appear as Alvita
@@ -14,6 +16,8 @@ class Collections(models.Model):
     brand = models.ForeignKey(Brand, on_delete=CASCADE, null=True)
     pile_count = models.IntegerField()
     pile_length = models.DecimalField(decimal_places=2, max_digits=5)
+    def __str__(self):
+        return self.name
 
 class Design(models.Model):
     # Appear as 6208B
@@ -27,6 +31,9 @@ class Color(models.Model):
     # Appear as Beige/Cream
     primary_color = models.CharField(max_length=10)
     texture_color = models.CharField(max_length=10)
+
+    def __str__(self):
+        return (f"{self.primary_color} / {self.texture_color}")
 
 class Size(models.Model):
     SHAPE_CHOICES = (
@@ -43,6 +50,10 @@ class Size(models.Model):
                 default=RECTANGLE)
     length = models.DecimalField(decimal_places=2, max_digits=5)
     width = models.DecimalField(decimal_places=2, max_digits=5)
+
+    def __str__(self):
+        return (f"{str(self.width)} ft x {str(self.length)} ft")
+
 class Carpet(models.Model):
     design = models.ForeignKey(Design, on_delete=models.CASCADE, null = True)
     color = models.ForeignKey(Color, on_delete=CASCADE, null = True)
