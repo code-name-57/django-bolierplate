@@ -25,7 +25,8 @@ from carpets.viewsets import *
 router = routers.DefaultRouter()
 router.register(r'Brands', BrandViewSet)
 router.register(r'Collections', CollectionViewSet)
-
+router.register(r'Design', DesignViewSet)
+router.register(r'Carpet', CarpetViewSet)
 
 
 urlpatterns = [

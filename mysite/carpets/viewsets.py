@@ -13,3 +13,7 @@ class DesignViewSet(viewsets.ModelViewSet):
     queryset = Design.objects.all()
     serializer_class = DesignSerializer
 
+class CarpetViewSet(viewsets.ModelViewSet):
+    queryset = Carpet.objects.all()
+    serializer_class = CarpetSerializer
+    

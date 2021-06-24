@@ -16,5 +16,9 @@ class DesignSerializer(serializers.ModelSerializer):
         model = Design
         exclude = []
 
+class CarpetSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Carpet
+        exclude = []
 
 
