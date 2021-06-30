@@ -21,4 +21,14 @@ class CarpetSerializer(serializers.ModelSerializer):
         model = Carpet
         exclude = []
 
+class SizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Size
+        exclude = []
+
+class ColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Color
+        exclude = []
+
 
