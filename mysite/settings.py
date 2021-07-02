@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'storages',
     'carpets',
 ]
 
@@ -145,6 +146,10 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+DROPBOX_OAUTH2_TOKEN = 'gFs6dN0fCKMAAAAAAAAAAadh211SXKnoVftT8xRK9sUacVo_Lr6H1-i_SBAaNCFI'
+
+DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
 MEDIA_ROOT=     os.path.join(BASE_DIR, 'mysite/media'),
 
