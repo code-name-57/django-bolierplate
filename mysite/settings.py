@@ -147,7 +147,7 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DROPBOX_OAUTH2_TOKEN = 'gFs6dN0fCKMAAAAAAAAAAadh211SXKnoVftT8xRK9sUacVo_Lr6H1-i_SBAaNCFI'
+DROPBOX_OAUTH2_TOKEN = os.environ['DROPBOX_OAUTH2_TOKEN']
 
 DEFAULT_FILE_STORAGE = 'storages.backends.dropbox.DropBoxStorage'
 
