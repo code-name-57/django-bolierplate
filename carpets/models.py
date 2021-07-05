@@ -74,6 +74,6 @@ class Carpet(models.Model):
 class CarpetAdmin(admin.ModelAdmin):
     list_display = ['id', 'design_collection', 'design', 'color', 'size', 'inventory']
     list_editable = ['inventory']
-    search_fields = ['design__name']
+    search_fields = ['design__name', 'design__collection__name', 'color__primary_color', 'color__texture_color']
     def design_collection(self, obj):
         return obj.design.collection.name
