@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
+from django.contrib import admin
 
 class Brand(models.Model):
     # Appear as Loloi
@@ -69,3 +70,10 @@ class Carpet(models.Model):
 
     def in_stock(self):
         return self.inventory > 0
+
+class CarpetAdmin(admin.ModelAdmin):
+    list_display = ['id', 'design_collection', 'design', 'color', 'size', 'inventory']
+    list_editable = ['inventory']
+    search_fields = ['design__name']
+    def design_collection(self, obj):
+        return obj.design.collection.name
