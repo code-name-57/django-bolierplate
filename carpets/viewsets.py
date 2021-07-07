@@ -6,7 +6,7 @@ class BrandViewSet(viewsets.ModelViewSet):
     serializer_class = BrandSerializer
 
 class CollectionViewSet(viewsets.ModelViewSet):
-    queryset = Collections.objects.all()
+    queryset = Collection.objects.all()
     serializer_class = CollectionSerializer
 
 class DesignViewSet(viewsets.ModelViewSet):

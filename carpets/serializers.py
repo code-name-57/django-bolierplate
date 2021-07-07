@@ -8,7 +8,7 @@ class BrandSerializer(serializers.ModelSerializer):
 
 class CollectionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Collections
+        model = Collection
         exclude = []
 
 class DesignSerializer(serializers.ModelSerializer):
