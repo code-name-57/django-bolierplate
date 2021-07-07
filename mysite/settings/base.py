@@ -12,6 +12,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 
+if os.environ.get('PRODUCTION') is None:
+    from mysite.settings.dev import *
+else:
+    from mysite.settings.prod import *
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -24,6 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'import_export',
     'rest_framework',
     'storages',
     'carpets',
@@ -101,7 +107,3 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-if os.environ.get('PRODUCTION') is None:
-    from mysite.settings.dev import *
-else:
-    from mysite.settings.prod import *
