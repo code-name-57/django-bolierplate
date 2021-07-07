@@ -12,10 +12,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 
-if os.environ.get('PRODUCTION') is None:
-    from mysite.settings.dev import *
-else:
-    from mysite.settings.prod import *
 
 
 # Quick-start development settings - unsuitable for production
@@ -107,3 +103,7 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+if os.environ.get('PRODUCTION') is None:
+    from mysite.settings.dev import *
+else:
+    from mysite.settings.prod import *
