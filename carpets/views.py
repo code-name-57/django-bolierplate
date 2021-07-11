@@ -6,6 +6,11 @@ from .forms import CarpetImageForm, BrandForm
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
 
+def showAllCarpets(request):
+    available_carpets = Carpet.objects.all()
+    context = {"carpets": available_carpets}
+    return render(request, "carpets_index.html", context)
+
 
 def showimage(request):
 
