@@ -2,20 +2,56 @@
 
 {% block content %}
 <h1>Carpets List</h1>
-{% if carpets %}
-<div class="row">
-    {% for carpet in carpets %}
+<button onclick="showFilter()" id="filter-toggle">Hide Filters</button>
+<div class="container" id="cartridge-search-input">
+    <p class="title">Filter Carpets</p>
+    <form method="get">
+        {{ filter.form.as_p }}
+        <input class="btn" id="submit-filter" type="submit" />
+        <a class="btn" id="clear-filter" href="{% url 'details'%}">clear</a>
+    </form>
+</div>
+{% if filter.qs %}
+<div class="row mt-3">
+    {% for carpet in filter.qs %}
     <div class="col-sm-4 col-xs-6">
         <div class="card">
             <img class="card-img-top" src="{{carpet.image_file.url}}" alt="Card image cap">
-                <h5 class="card-title"> {{ carpet.design.name }} {{ carpet.color.primary_color }}/{{ carpet.color.texture_color }}</h5>
-                <p class="card-text">{{carpet}}{{ carpet.design.collection.name }} </p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+            <h5 class="card-title"> {{ carpet.design.name }}
+                {{ carpet.color.primary_color }}/{{ carpet.color.texture_color }}</h5>
+            <p class="card-text">{{carpet}}{{ carpet.design.collection.name }} </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
     </div>
-{% endfor %}
+    <div class="col-sm-4 col-xs-6">
+        <div class="card">
+            <img class="card-img-top" src="{{carpet.image_file.url}}" alt="Card image cap">
+            <h5 class="card-title"> {{ carpet.design.name }}
+                {{ carpet.color.primary_color }}/{{ carpet.color.texture_color }}</h5>
+            <p class="card-text">{{carpet}}{{ carpet.design.collection.name }} </p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>
+        </div>
+    </div>
+    {% endfor %}
 </div>
 {% else %}
 <p>There are no carpets in the catalog.</p>
 {% endif %}
+<script>
+    function showFilter() {
+      var x = document.getElementById("cartridge-search-input");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    
+      var button = document.getElementById("filter-toggle")
+      if (button.innerText == "Display Filters") {
+          button.innerText = "Hide Filters"
+      } else {
+          button.innerText = "Display Filters"
+      }
+    } 
+    </script>
 {% endblock %}
