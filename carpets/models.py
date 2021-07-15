@@ -10,7 +10,7 @@ from django.utils.safestring import mark_safe
 class Brand(models.Model):
     # Appear as Loloi
     name = models.CharField(max_length=30)
-    website = models.CharField(max_length=50)
+    website = models.CharField(max_length=50, blank=True)
     def __str__(self):
         return self.name
 
@@ -36,7 +36,7 @@ class Size(models.Model):
 class Color(models.Model):
     # Appear as Beige/Cream
     primary_color = models.CharField(max_length=10)
-    texture_color = models.CharField(max_length=10)
+    texture_color = models.CharField(max_length=10, blank=True)
 
     def __str__(self):
         return (f"{self.primary_color} / {self.texture_color}")
@@ -45,10 +45,10 @@ class Color(models.Model):
 class Collection(models.Model):
     # Appear as Alvita
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=30)
+    description = models.CharField(max_length=200, blank=True)
     brand = models.ForeignKey(Brand, on_delete=CASCADE, null=True)
-    pile_count = models.IntegerField()
-    pile_length = models.DecimalField(decimal_places=2, max_digits=5)
+    pile_count = models.IntegerField(blank=True)
+    pile_length = models.DecimalField(decimal_places=2, max_digits=5, blank=True)
 
     available_sizes = models.ManyToManyField(Size)
 
@@ -111,7 +111,12 @@ def available_size_changed(sender, instance, action, model, pk_set, **kwargs):
 def available_color_changed(sender, instance, action, model, pk_set, **kwargs):
     if action == "post_add":
         for pk in pk_set:
-            print(str(model.objects.get(pk=pk)))
+            for sz in instance.collection.available_sizes.all():
+                Carpet.objects.get_or_create(
+                    design=instance,
+                    size=sz,
+                    color = model.objects.get(pk=pk)
+                )
         print("colors added for design : ", instance.name)
     elif action == "post_remove":
         for pk in pk_set:
