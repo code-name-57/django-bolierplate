@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib import admin
+from django.db.models import constraints
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 
@@ -90,4 +91,39 @@ class Carpet(models.Model):
             return 'No Image Found'
     image_tag.short_description = 'Image'
 
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['design','color','size'], name="unique_ein")]
 
+from django.db.models.signals import m2m_changed, post_save
+from .models import *
+
+def available_size_changed(sender, instance, action, model, pk_set, **kwargs):
+    if action == "post_add":
+        for pk in pk_set:
+            print(str(model.objects.get(pk=pk)))
+        print("sizes added for  collection : ", instance.name)
+    elif action == "post_remove":
+        for pk in pk_set:
+            print(str(model.objects.get(pk=pk)))
+        print("sizes removed from collection  : ", instance.name)
+    pass
+
+def available_color_changed(sender, instance, action, model, pk_set, **kwargs):
+    if action == "post_add":
+        for pk in pk_set:
+            print(str(model.objects.get(pk=pk)))
+        print("colors added for design : ", instance.name)
+    elif action == "post_remove":
+        for pk in pk_set:
+            print(str(model.objects.get(pk=pk)))
+        print("colors removed from design  : ", instance.name)
+    pass
+
+def design_created(sender, instance, created, **kwargs):
+    print(str(instance))
+    print("Carpet Created")
+    pass
+
+m2m_changed.connect(available_color_changed, sender = Design.available_colors.through)
+m2m_changed.connect(available_size_changed, sender = Collection.available_sizes.through)
+post_save.connect(design_created, sender = Carpet)
