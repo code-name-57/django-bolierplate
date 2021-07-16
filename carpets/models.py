@@ -125,8 +125,8 @@ def available_color_changed(sender, instance, action, model, pk_set, **kwargs):
     pass
 
 def design_created(sender, instance, created, **kwargs):
-    print(str(instance))
-    print("Carpet Created")
+    instance.design.available_colors.add(instance.color)
+    instance.design.collection.available_sizes.add(instance.size)
     pass
 
 m2m_changed.connect(available_color_changed, sender = Design.available_colors.through)
