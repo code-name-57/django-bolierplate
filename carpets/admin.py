@@ -3,12 +3,17 @@ from django.contrib import admin
 # Register your models here.
 from .models import *
 from import_export import resources
+from import_export.fields import Field
 from import_export.admin import ImportExportModelAdmin
 
 class CarpetResource(resources.ModelResource):
+    size_shape = Field()
     class Meta:
         model = Carpet
+        fields = ('design__name', 'color__primary_color', 'size_shape', 'inventory')
 
+    def dehydrate_size_shape(self, carpet):
+        return '%s x %s %s' % (carpet.size.length, carpet.size.width, carpet.size.shape)
 
 class CarpetAdmin(ImportExportModelAdmin):
     resource_class = CarpetResource
