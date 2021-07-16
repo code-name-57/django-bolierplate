@@ -100,6 +100,13 @@ from .models import *
 def available_size_changed(sender, instance, action, model, pk_set, **kwargs):
     if action == "post_add":
         for pk in pk_set:
+            for des in instance.design_set.all():
+                for col in des.available_colors.all():
+                    Carpet.objects.get_or_create(
+                        design = des,
+                        color = col,
+                        size = model.objects.get(pk=pk)
+                    )
             print(str(model.objects.get(pk=pk)))
         print("sizes added for  collection : ", instance.name)
     elif action == "post_remove":
