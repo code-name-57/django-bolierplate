@@ -9,7 +9,7 @@ from django.utils.safestring import mark_safe
 
 class Brand(models.Model):
     # Appear as Loloi
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=30, unique=True)
     website = models.CharField(max_length=50, blank=True)
     def __str__(self):
         return self.name
@@ -30,6 +30,9 @@ class Size(models.Model):
     length = models.DecimalField(decimal_places=2, max_digits=5)
     width = models.DecimalField(decimal_places=2, max_digits=5)
 
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['length', 'width', 'shape'], name="unique_size")]
+
     def __str__(self):
         return (f"{str(self.width)} ft x {str(self.length)} ft {self.shape}")
 
@@ -37,6 +40,9 @@ class Color(models.Model):
     # Appear as Beige/Cream
     primary_color = models.CharField(max_length=10)
     texture_color = models.CharField(max_length=10, blank=True)
+
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['primary_color', 'texture_color'], name="unique_color")]
 
     def __str__(self):
         return (f"{self.primary_color} / {self.texture_color}")
