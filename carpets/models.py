@@ -100,6 +100,20 @@ class Carpet(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['design','color','size'], name="unique_ein")]
 
+class Shipment(models.Model):
+    manufacturer = models.CharField(max_length=30)
+    ordered_date = models.DateField(blank = True)
+    arrival_date = models.DateField(blank = True)
+    available = models.BooleanField(default=False)
+    packing_sheet =  models.FileField(upload_to='shipments/', blank=True)
+
+
+class ShipmentItem(models.Model):
+    shipment = models.ForeignKey(Shipment, on_delete=models.CASCADE, null=True)
+    barcode = models.CharField(max_length=30, blank = True)
+    carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
 from django.db.models.signals import m2m_changed, post_save
 from .models import *
 
