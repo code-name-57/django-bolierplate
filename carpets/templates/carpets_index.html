@@ -1,4 +1,4 @@
-{% extends "base_generic.html" %}
+{% extends "base.html" %}
 
 {% block content %}
 <h1>Carpets List</h1>
@@ -8,7 +8,7 @@
     <form method="get">
         {{ filter.form.as_p }}
         <input class="btn" id="submit-filter" type="submit" />
-        <a class="btn" id="clear-filter" href="{% url 'details'%}">clear</a>
+        <a class="btn" id="clear-filter" href="{% url 'list'%}">clear</a>
     </form>
 </div>
 {% if filter.qs %}
