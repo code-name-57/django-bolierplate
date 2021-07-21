@@ -17,13 +17,11 @@ class Brand(models.Model):
 class Size(models.Model):
     SHAPE_CHOICES = (
     ('Rectangle', 'Rectangle'),
-    (2, 'Oval'),
-    (3, 'Round'),
+    ('Oval', 'Oval'),
+    ('Round', 'Round'),
     )
     # Constants in Model class
-    RECTANGLE = 1
-    OVAL = 2
-    ROUND = 3
+    RECTANGLE = 'Rectangle'
     shape = models.CharField(max_length=20,
                 choices=SHAPE_CHOICES,
                 default=RECTANGLE)
