@@ -24,7 +24,7 @@ def showAllCarpets(request):
     available_carpets = Carpet.objects.all()
     carpet_filter = CarpetPropertyFilter(request.GET, queryset=available_carpets)
     context = {"filter": carpet_filter}
-    return render(request, "carpets_index.html", context)
+    return render(request, "shop.html", context)
 
 
 def showimage(request):
@@ -49,7 +49,7 @@ def showimage(request):
 
 def carpet_detail_view(request, design_id, color_id, size_id):
     carpet = get_object_or_404(Carpet, design__id=design_id, color__id=color_id, size__id=size_id)
-    return render(request, "carpet_detail.html", {"carpet": carpet})
+    return render(request, "shop.html", {"carpet": carpet})
     breakpoint()
     pass
 class CarpetDetailView(DetailView):
