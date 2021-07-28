@@ -57,8 +57,28 @@ class BrandAdmin(admin.ModelAdmin):
     list_display = ['name', 'website']
     search_fields = ['name']
 
+class EnvColorAdmin(admin.ModelAdmin):
+    list_display = ['color']
+
+class FloorTextureAdmin(admin.ModelAdmin):
+    list_display = ['floortype_name', 'name', 'image_tag']
+    def floortype_name(self, obj):
+        return obj.floortype.name
+
+class FloorTextureTabularInline(admin.TabularInline):
+    model = FloorTexture
+    show_change_link = True
+
+class FloorTypeAdmin(admin.ModelAdmin):
+    inlines = [FloorTextureTabularInline]
+    list_display = ['name']
+
 admin.site.register([Color, Size])
 admin.site.register(Carpet, CarpetAdmin) 
 admin.site.register(Design, DesignAdmin)
 admin.site.register(Collection, CollectionAdmin)
 admin.site.register(Brand, BrandAdmin)
+
+admin.site.register(EnvColor, EnvColorAdmin)
+admin.site.register(FloorTexture, FloorTextureAdmin)
+admin.site.register(FloorType, FloorTypeAdmin)

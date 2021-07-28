@@ -17,3 +17,22 @@ class CarpetViewSet(viewsets.ModelViewSet):
     queryset = Carpet.objects.all()
     serializer_class = CarpetSerializer
     
+class SizeViewSet(viewsets.ModelViewSet):
+    queryset = Size.objects.all()
+    serializer_class = SizeSerializer
+
+class ColorViewSet(viewsets.ModelViewSet):
+    queryset = Color.objects.all()
+    serializer_class = ColorSerializer
+
+class EnvColorViewset(viewsets.ModelViewSet):
+    queryset = EnvColor.objects.all()
+    serializer_class = EnvColorSerializer
+
+class FloorTypeViewset(viewsets.ModelViewSet):
+    queryset = FloorType.objects.all()
+    serializer_class = FloorTypeSerializer
+
+class FloorTextureViewset(viewsets.ModelViewSet):
+    queryset = FloorTexture.objects.all()
+    serializer_class = FloorTextureSerializer

@@ -31,4 +31,19 @@ class ColorSerializer(serializers.ModelSerializer):
         model = Color
         exclude = []
 
+class EnvColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = EnvColor
+        exclude = []
+
+class FloorTypeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FloorType
+        exclude = []
+
+class FloorTextureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FloorTexture
+        exclude = []
+
 
