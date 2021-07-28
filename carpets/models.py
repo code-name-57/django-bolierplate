@@ -5,7 +5,7 @@ from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 
 from django.utils.safestring import mark_safe
-
+from utils.signals import shipment_created
 
 class Brand(models.Model):
     # Appear as Loloi
@@ -159,3 +159,4 @@ def design_created(sender, instance, created, **kwargs):
 m2m_changed.connect(available_color_changed, sender = Design.available_colors.through)
 m2m_changed.connect(available_size_changed, sender = Collection.available_sizes.through)
 post_save.connect(design_created, sender = Carpet)
+post_save.connect(shipment_created, sender = Shipment)
