@@ -18,24 +18,9 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from rest_framework import routers
-
-from carpets.viewsets import *
-
-router = routers.DefaultRouter()
-router.register(r'Brands', BrandViewSet)
-router.register(r'Collections', CollectionViewSet)
-router.register(r'Designs', DesignViewSet)
-router.register(r'Carpets', CarpetViewSet)
-router.register(r'Sizes', SizeViewSet)
-router.register(r'Colors', ColorViewSet)
-
-router.register(r'EnvColors', EnvColorViewset)
-router.register(r'FloorTypes', FloorTypeViewset)
-router.register(r'FloorTextures', FloorTextureViewset)
-
 urlpatterns = [
     path('carpets/', include('carpets.urls')),
     path('admin/', admin.site.urls),
-    path('rest/', include(router.urls)),
+    path('rugviz/', include('rugviz.urls')),
+    path('catalog/', include('catalog.urls')),
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)

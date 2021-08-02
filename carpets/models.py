@@ -146,24 +146,3 @@ m2m_changed.connect(available_color_changed, sender = Design.available_colors.th
 m2m_changed.connect(available_size_changed, sender = Collection.available_sizes.through)
 post_save.connect(design_created, sender = Carpet)
 
-
-# Rugviz speecific models
-from colorfield.fields import ColorField
-
-class EnvColor(models.Model):
-    color = ColorField(default='#FF0000', unique=True)
-
-class FloorType(models.Model):
-    name = models.CharField(max_length=30, unique=True)
-
-class FloorTexture(models.Model):
-    floortype = models.ForeignKey(FloorType, on_delete=models.CASCADE)
-    name = CharField(max_length=30, blank = True)
-    image_file = models.FileField(upload_to='floors/')
-
-    def image_tag(self):
-        if self.image_file:
-            return mark_safe('<img src="%s" style="width: 45px; height:45px;" />' % self.image_file.url)
-        else:
-            return 'No Image Found'
-    image_tag.short_description = 'Image'
