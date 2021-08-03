@@ -7,7 +7,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField
 
 from django.utils.safestring import mark_safe
-
+from utils.signals import shipment_created
 
 class Brand(models.Model):
     # Appear as Loloi
@@ -100,6 +100,20 @@ class Carpet(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['design','color','size'], name="unique_ein")]
 
+class Shipment(models.Model):
+    manufacturer = models.CharField(max_length=30)
+    ordered_date = models.DateField(blank = True)
+    arrival_date = models.DateField(blank = True)
+    available = models.BooleanField(default=False)
+    packing_sheet =  models.FileField(upload_to='shipments/', blank=True)
+
+
+class ShipmentItem(models.Model):
+    shipment = models.ForeignKey(Shipment, on_delete=models.CASCADE, null=True)
+    barcode = models.CharField(max_length=30, blank = True)
+    carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
 from django.db.models.signals import m2m_changed, post_save
 from .models import *
 
@@ -146,3 +160,4 @@ m2m_changed.connect(available_color_changed, sender = Design.available_colors.th
 m2m_changed.connect(available_size_changed, sender = Collection.available_sizes.through)
 post_save.connect(design_created, sender = Carpet)
 
+post_save.connect(shipment_created, sender = Shipment)
