@@ -27,8 +27,8 @@ class Size(models.Model):
     shape = models.CharField(max_length=20,
                 choices=SHAPE_CHOICES,
                 default=RECTANGLE)
-    length = models.DecimalField(decimal_places=2, max_digits=5)
-    width = models.DecimalField(decimal_places=2, max_digits=5)
+    length = models.DecimalField(decimal_places=2, max_digits=8)
+    width = models.DecimalField(decimal_places=2, max_digits=8)
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['length', 'width', 'shape'], name="unique_size_t")]
@@ -45,7 +45,7 @@ class Color(models.Model):
         constraints = [models.UniqueConstraint(fields=['primary_color', 'texture_color'], name="unique_color_t")]
 
     def __str__(self):
-        return (f"{self.primary_color} / {self.texture_color}")
+        return (f"{self.primary_color} {self.texture_color}")
 
 
 class Collection(models.Model):
@@ -71,11 +71,24 @@ class Design(models.Model):
 
     def __str__(self):
         return self.name
+from django.conf import settings
+
+def GetImagePath(dic):
+    print(settings.MEDIA_ROOT)
+    print(dic.design.collection.name)
+    print(dic.design.name)
+    print(dic.color)
+    return()
+
+import pathlib
+
+def design_image_path(instance, filename):
+    return 'catalog/DesignColor/{0}/{1}_{2}.{3}'.format(instance.design.collection.name, instance.design.name, instance.color, pathlib.Path(filename).suffix)
 
 class DesignInColor(models.Model):
     design = models.ForeignKey(Design, on_delete=models.CASCADE, null = True)
     color = models.ForeignKey(Color, on_delete=CASCADE, null = True)
-    image_file = models.ImageField(upload_to='catalog/DesignColor', null=True)
+    image_file = models.ImageField(upload_to=design_image_path, blank=True, null=True)
 
     def __str__(self):
         return (f"({str(self.design.collection)}) "
@@ -87,6 +100,13 @@ class DesignInColor(models.Model):
         else:
             return 'No Image Found'
     image_tag.short_description = 'Image'
+
+    # def save(self, *args, **kwargs):
+    #     if(not self.image_file):
+    #         self.image_file = GetImagePath(self)
+    #         breakpoint()
+    #     else:
+    #         super(DesignInColor, self).save(*args, **kwargs)
 
 class Carpet(models.Model):
     designColor = models.ForeignKey(DesignInColor, on_delete=models.CASCADE, null = True)
