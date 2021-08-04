@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     'carpets',
     'catalog',
     'rugviz',
+    'shipment',
     'django_filters',
 ]
 

@@ -7,7 +7,7 @@ from django.db.models.deletion import CASCADE
 from django.db.models.fields import CharField
 
 from django.utils.safestring import mark_safe
-from utils.signals import shipment_created
+from .utils.signals import shipment_created
 
 class Brand(models.Model):
     # Appear as Loloi
