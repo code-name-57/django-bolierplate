@@ -45,7 +45,7 @@ class Color(models.Model):
         constraints = [models.UniqueConstraint(fields=['primary_color', 'texture_color'], name="unique_color_t")]
 
     def __str__(self):
-        return (f"{self.primary_color} {self.texture_color}")
+        return (f"{self.primary_color}_{self.texture_color}")
 
 
 class Collection(models.Model):
@@ -83,7 +83,11 @@ def GetImagePath(dic):
 import pathlib
 
 def design_image_path(instance, filename):
-    return 'catalog/DesignColor/{0}/{1}_{2}.{3}'.format(instance.design.collection.name, instance.design.name, instance.color, pathlib.Path(filename).suffix)
+    return 'catalog/DesignColor/{0}/{1}_{2}{3}'.format(instance.design.collection.name, instance.design.name, instance.color, pathlib.Path(filename).suffix)
+
+def get_default_image(design, color):
+    return 'catalog/DesignColor/{0}/{1}_{2}.{3}'.format(design.collection.name, design.name, color, "jpg")
+    # breakpoint()
 
 class DesignInColor(models.Model):
     design = models.ForeignKey(Design, on_delete=models.CASCADE, null = True)
@@ -94,6 +98,7 @@ class DesignInColor(models.Model):
         return (f"({str(self.design.collection)}) "
                 f"{self.design} in "
                 f"{self.color}")
+
     def image_tag(self):
         if self.image_file:
             return mark_safe('<img src="%s" style="width: 45px; height:45px;" />' % self.image_file.url)
@@ -101,12 +106,15 @@ class DesignInColor(models.Model):
             return 'No Image Found'
     image_tag.short_description = 'Image'
 
-    # def save(self, *args, **kwargs):
-    #     if(not self.image_file):
-    #         self.image_file = GetImagePath(self)
-    #         breakpoint()
-    #     else:
-    #         super(DesignInColor, self).save(*args, **kwargs)
+    class Meta:
+        constraints = [models.UniqueConstraint(fields=['design', 'color'], name="unique_design_color_t")]
+
+    def save(self, *args, **kwargs):
+        if(not self.image_file):
+            self.image_file.name =get_default_image(self.design, self.color)
+            breakpoint()
+        super(DesignInColor, self).save(*args, **kwargs)
+        breakpoint()
 
 class Carpet(models.Model):
     designColor = models.ForeignKey(DesignInColor, on_delete=models.CASCADE, null = True)
