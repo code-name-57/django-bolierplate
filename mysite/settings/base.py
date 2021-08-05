@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'crispy_forms',
     'storages',
-    'carpets',
     'catalog',
     'rugviz',
     'shipment',
