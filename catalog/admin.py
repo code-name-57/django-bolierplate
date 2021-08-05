@@ -1,4 +1,3 @@
-from carpets.models import available_color_changed
 from django.contrib import admin
 
 # Register your models here.

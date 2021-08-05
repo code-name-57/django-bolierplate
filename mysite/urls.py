@@ -19,7 +19,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('carpets/', include('carpets.urls')),
     path('admin/', admin.site.urls),
     path('rugviz/', include('rugviz.urls')),
     path('catalog/', include('catalog.urls')),
