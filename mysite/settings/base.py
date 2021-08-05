@@ -33,6 +33,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static_in_env'),
 )
 
 ALLOWED_HOSTS = ['*']
@@ -59,9 +60,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'import_export',
+    'colorfield',
     'rest_framework',
+    'crispy_forms',
     'storages',
     'carpets',
+    'catalog',
+    'rugviz',
+    'shipment',
     'django_filters',
 ]
 
@@ -129,7 +135,9 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+# CRISPY FORM
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field

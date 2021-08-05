@@ -17,3 +17,10 @@ class CarpetViewSet(viewsets.ModelViewSet):
     queryset = Carpet.objects.all()
     serializer_class = CarpetSerializer
     
+class SizeViewSet(viewsets.ModelViewSet):
+    queryset = Size.objects.all()
+    serializer_class = SizeSerializer
+
+class ColorViewSet(viewsets.ModelViewSet):
+    queryset = Color.objects.all()
+    serializer_class = ColorSerializer

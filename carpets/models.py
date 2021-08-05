@@ -1,11 +1,13 @@
+from enum import unique
 from django.db import models
 from django.contrib import admin
 from django.db.models import constraints
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
+from django.db.models.fields import CharField
 
 from django.utils.safestring import mark_safe
-
+from .utils.signals import shipment_created
 
 class Brand(models.Model):
     # Appear as Loloi
@@ -17,13 +19,11 @@ class Brand(models.Model):
 class Size(models.Model):
     SHAPE_CHOICES = (
     ('Rectangle', 'Rectangle'),
-    (2, 'Oval'),
-    (3, 'Round'),
+    ('Oval', 'Oval'),
+    ('Round', 'Round'),
     )
     # Constants in Model class
-    RECTANGLE = 1
-    OVAL = 2
-    ROUND = 3
+    RECTANGLE = 'Rectangle'
     shape = models.CharField(max_length=20,
                 choices=SHAPE_CHOICES,
                 default=RECTANGLE)
@@ -100,6 +100,20 @@ class Carpet(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['design','color','size'], name="unique_ein")]
 
+class Shipment(models.Model):
+    manufacturer = models.CharField(max_length=30)
+    ordered_date = models.DateField(blank = True)
+    arrival_date = models.DateField(blank = True)
+    available = models.BooleanField(default=False)
+    packing_sheet =  models.FileField(upload_to='shipments/', blank=True)
+
+
+class ShipmentItem(models.Model):
+    shipment = models.ForeignKey(Shipment, on_delete=models.CASCADE, null=True)
+    barcode = models.CharField(max_length=30, blank = True)
+    carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
 from django.db.models.signals import m2m_changed, post_save
 from .models import *
 
@@ -145,3 +159,5 @@ def design_created(sender, instance, created, **kwargs):
 m2m_changed.connect(available_color_changed, sender = Design.available_colors.through)
 m2m_changed.connect(available_size_changed, sender = Collection.available_sizes.through)
 post_save.connect(design_created, sender = Carpet)
+
+post_save.connect(shipment_created, sender = Shipment)
