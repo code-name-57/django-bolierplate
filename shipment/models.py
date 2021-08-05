@@ -19,7 +19,8 @@ class Shipment(models.Model):
         
 
 
-class ShipmentItem(Carpet):
+class ShipmentItem(models.Model):
+    carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
     shipment = models.ForeignKey(Shipment, on_delete=models.CASCADE, null=True)
     barcode = models.CharField(max_length=30, blank = True)
     quantity = models.PositiveIntegerField(default=1)

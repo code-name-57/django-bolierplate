@@ -20,9 +20,9 @@ class ShipmentAdmin(admin.ModelAdmin):
     @admin.action(description='Process Packing Sheet')
     def process_packing_sheet(self, request, queryset):
         for shipment in queryset:
-            spreadsheet.shipment_created(shipment)
+            spreadsheet.process_packing_sheet(shipment)
             
 
 admin.site.register(Shipment, ShipmentAdmin)
-
+admin.site.register([ShipmentItem])
     

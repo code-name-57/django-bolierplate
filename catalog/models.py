@@ -18,12 +18,12 @@ class Brand(models.Model):
 
 class Size(models.Model):
     SHAPE_CHOICES = (
-    ('Rectangle', 'Rectangle'),
-    ('Oval', 'Oval'),
-    ('Round', 'Round'),
+    ('D', 'Rectangle'),
+    ('R', 'Runner'),
+    ('C', 'Round'),
     )
     # Constants in Model class
-    RECTANGLE = 'Rectangle'
+    RECTANGLE = 'D'
     shape = models.CharField(max_length=20,
                 choices=SHAPE_CHOICES,
                 default=RECTANGLE)
@@ -51,10 +51,10 @@ class Color(models.Model):
 class Collection(models.Model):
     # Appear as Alvita
     name = models.CharField(max_length=30)
-    description = models.CharField(max_length=200, blank=True)
+    description = models.CharField(max_length=200, blank=True, null=True)
     brand = models.ForeignKey(Brand, on_delete=CASCADE, null=True)
-    pile_count = models.IntegerField(blank=True)
-    pile_length = models.DecimalField(decimal_places=2, max_digits=5, blank=True)
+    pile_count = models.IntegerField(blank=True, null=True)
+    pile_length = models.DecimalField(decimal_places=2, max_digits=5, blank=True, null=True)
 
     available_sizes = models.ManyToManyField(Size)
 
