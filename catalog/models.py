@@ -111,10 +111,10 @@ class DesignInColor(models.Model):
 
     def save(self, *args, **kwargs):
         if(not self.image_file):
-            self.image_file.name =get_default_image(self.design, self.color)
-            breakpoint()
+            self.image_file.name = get_default_image(self.design, self.color)
+            # breakpoint()
         super(DesignInColor, self).save(*args, **kwargs)
-        breakpoint()
+        # breakpoint()
 
 class Carpet(models.Model):
     designColor = models.ForeignKey(DesignInColor, on_delete=models.CASCADE, null = True)
