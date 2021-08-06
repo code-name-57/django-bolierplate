@@ -85,8 +85,28 @@ import pathlib
 def design_image_path(instance, filename):
     return 'catalog/DesignColor/{0}/{1}_{2}{3}'.format(instance.design.collection.name, instance.design.name, instance.color, pathlib.Path(filename).suffix)
 
+import os
+import re
+from django.conf import settings
+
 def get_default_image(design, color):
-    return 'catalog/DesignColor/{0}/{1}_{2}.{3}'.format(design.collection.name, design.name, color, "jpg")
+    mediaDir = settings.MEDIA_ROOT + 'catalog/DesignColor'
+    # print(mediaDir)
+    # breakpoint()
+    collectionDir = mediaDir + '/{0}'.format(design.collection.name)
+    regexExp = '({0})+.({1})'.format(color.primary_color, color.texture_color)
+    print(regexExp)
+    regex = re.compile(regexExp)
+    for root, dirs, files in os.walk(mediaDir):
+        for file in files:
+            # print(file)
+            if re.search(design.name[:-1], file, re.IGNORECASE):
+                if re.search(regexExp, file, re.IGNORECASE):
+                    # if re.search(color.texture_color, file, re.IGNORECASE):
+                    print("FOUND")
+                    return os.path.join(root, file)
+    # return 'catalog/DesignColor/{0}/{1}_{2}.{3}'.format(design.collection.name, design.name, color, "jpg")
+    return None
     # breakpoint()
 
 class DesignInColor(models.Model):

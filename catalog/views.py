@@ -4,17 +4,18 @@ from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.views.generic.list import ListView
 import django_filters
-from .models import Carpet, Design, Collection, DesignInColor
+from .models import Carpet, Design, Collection, DesignInColor, Color, Size
 from django.views.generic import DetailView
 
-from carpets import models
+# from catalog import models
 
 class CarpetPropertyFilter(django_filters.FilterSet):
-    designColor = django_filters.ModelMultipleChoiceFilter(queryset=DesignInColor.objects.all(), widget=CheckboxSelectMultiple)
-    designColor__design__collection = django_filters.ModelMultipleChoiceFilter(queryset=Collection.objects.all(), widget=CheckboxSelectMultiple)
+    designColor__color = django_filters.ModelMultipleChoiceFilter(label='Colors', queryset=Color.objects.all(), widget=CheckboxSelectMultiple)
+    designColor__design__collection = django_filters.ModelMultipleChoiceFilter(label='Collections', queryset=Collection.objects.all(), widget=CheckboxSelectMultiple)
+    size = django_filters.ModelMultipleChoiceFilter(label='Sizes', queryset=Size.objects.all(), widget=CheckboxSelectMultiple)
     class Meta:
         model = Carpet
-        fields = {'designColor', 'designColor__design__collection'}
+        fields = {'designColor__color', 'designColor__design__collection'}
 
 def index(request):
     return HttpResponse("Hello, world. You're at the polls index.")
@@ -25,6 +26,18 @@ def showAllCarpets(request):
     context = {"filter": carpet_filter}
     return render(request, "shop.html", context)
 
+class DesignInColorPropertyFilter(django_filters.FilterSet):
+    color = django_filters.ModelMultipleChoiceFilter(label='Colors', field_name='color', queryset=Color.objects.all(), widget=CheckboxSelectMultiple)
+    design__collection__name = django_filters.ModelMultipleChoiceFilter(label='Collections', field_name='design__collection__name', queryset=Collection.objects.all(), widget=CheckboxSelectMultiple)
+    class Meta:
+        model = DesignInColor
+        fields = {'color', 'design__collection__name'}
+
+def ShowAllDesginInColors(request):
+    available_Designs = DesignInColor.objects.all()
+    design_filter = DesignInColorPropertyFilter(request.GET, queryset=available_Designs)
+    context = {"filter": design_filter}
+    return render(request, "shop.html", context)
 
 def carpet_detail_view(request, design_id, color_id, size_id):
     carpet = get_object_or_404(Carpet, design__id=design_id, color__id=color_id, size__id=size_id)
