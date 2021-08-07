@@ -90,7 +90,7 @@ import re
 from django.conf import settings
 
 def get_default_image(design, color):
-    mediaDir = settings.MEDIA_ROOT + 'catalog/DesignColor'
+    mediaDir = str(settings.MEDIA_ROOT) + 'catalog/DesignColor'
     # print(mediaDir)
     # breakpoint()
     collectionDir = mediaDir + '/{0}'.format(design.collection.name)
