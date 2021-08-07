@@ -38,8 +38,8 @@ class Size(models.Model):
 
 class Color(models.Model):
     # Appear as Beige/Cream
-    primary_color = models.CharField(max_length=10)
-    texture_color = models.CharField(max_length=10, blank=True)
+    primary_color = models.CharField(max_length=20)
+    texture_color = models.CharField(max_length=20, blank=True)
 
     class Meta:
         constraints = [models.UniqueConstraint(fields=['primary_color', 'texture_color'], name="unique_color_t")]
