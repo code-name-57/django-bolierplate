@@ -129,12 +129,12 @@ class DesignInColor(models.Model):
     class Meta:
         constraints = [models.UniqueConstraint(fields=['design', 'color'], name="unique_design_color_t")]
 
-    def save(self, *args, **kwargs):
-        if(not self.image_file):
-            self.image_file.name = get_default_image(self.design, self.color)
-            # breakpoint()
-        super(DesignInColor, self).save(*args, **kwargs)
-        # breakpoint()
+    # def save(self, *args, **kwargs):
+    #     if(not self.image_file):
+    #         self.image_file.name = get_default_image(self.design, self.color)
+    #         # breakpoint()
+    #     super(DesignInColor, self).save(*args, **kwargs)
+    #     # breakpoint()
 
 class Carpet(models.Model):
     designColor = models.ForeignKey(DesignInColor, on_delete=models.CASCADE, null = True)
