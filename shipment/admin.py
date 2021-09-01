@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib import messages
 from django.db.models import fields
 from django import forms
 
@@ -20,8 +21,12 @@ class ShipmentAdmin(admin.ModelAdmin):
     @admin.action(description='Process Packing Sheet')
     def process_packing_sheet(self, request, queryset):
         for shipment in queryset:
-            spreadsheet.process_packing_sheet(shipment)
-            
+            shipment_created_count, error = spreadsheet.process_packing_sheet(shipment)
+            if(shipment_created_count>0):
+                self.message_user(request, str(shipment_created_count) + " new shipment items creates", messages.SUCCESS)
+            else:
+                self.message_user(request, repr(error) + ". Packing list not processed. Please clean the packing sheet", messages.ERROR)
+
 
 admin.site.register(Shipment, ShipmentAdmin)
 admin.site.register([ShipmentItem])
