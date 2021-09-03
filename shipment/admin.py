@@ -8,8 +8,8 @@ from .models import *
 from .utils import spreadsheet
 class ShipmentItemTabularInline(admin.TabularInline):
     model = ShipmentItem
-    readonly_fields=['carpet_size', 'quantity']
-
+    readonly_fields=['barcode', 'carpet', 'carpet_size', 'quantity']
+    extra = 0
     # def carpet
     def carpet_size(self, si):
         return si.carpet.size
