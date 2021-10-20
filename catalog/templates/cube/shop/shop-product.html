@@ -143,9 +143,9 @@
               </a>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                {% for otherSize in otherSizes %}
+                <li><a class="dropdown-item" href="{% url 'carpets' carpet_id=otherSize.id %}">{{otherSize.size}}</a></li>
+                {% endfor %}
               </ul>
             </div>
             <p class="text-secondary mb-3">This coat has a blazer silhouette with notched lapels and front welt pockets.

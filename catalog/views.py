@@ -45,9 +45,15 @@ def showAllDesigns(request):
     context = {"filter": design_filter}
     return render(request, "cube/shop/shop-listing.html", context)
 
-def carpet_detail_view(request, design_id, color_id, size_id):
-    carpet = get_object_or_404(Carpet, designColor__design__id=design_id, designColor__color__id=color_id, size__id=size_id)
-    return render(request, "cube/shop/shop-product.html", {"carpet": carpet})
+# def carpet_detail_view(request, design_id, color_id, size_id):
+#     carpet = get_object_or_404(Carpet, designColor__design__id=design_id, designColor__color__id=color_id, size__id=size_id)
+#     otherSizes = Carpet.objects.filter(designColor = carpet.designColor)
+#     return render(request, "cube/shop/shop-product.html", {"carpet": carpet, "otherSizes": otherSizes})
+
+def carpet_detail_view(request, carpet_id):
+    carpet = get_object_or_404(Carpet, id=carpet_id)
+    otherSizes = Carpet.objects.filter(designColor = carpet.designColor)
+    return render(request, "cube/shop/shop-product.html", {"carpet": carpet, "otherSizes": otherSizes})
 
 class CarpetDetailView(DetailView):
     model = Carpet
