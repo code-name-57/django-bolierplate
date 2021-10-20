@@ -49,11 +49,6 @@ def showAllDesigns(request):
     context = {"filter": design_filter}
     return render(request, "cube/shop/shop-listing.html", context)
 
-# def carpet_detail_view(request, design_id, color_id, size_id):
-#     carpet = get_object_or_404(Carpet, designColor__design__id=design_id, designColor__color__id=color_id, size__id=size_id)
-#     otherSizes = Carpet.objects.filter(designColor = carpet.designColor)
-#     return render(request, "cube/shop/shop-product.html", {"carpet": carpet, "otherSizes": otherSizes})
-
 def carpet_detail_view(request, carpet_id):
     carpet = get_object_or_404(Carpet, id=carpet_id)
     otherSizes = Carpet.objects.filter(designColor = carpet.designColor)
@@ -63,23 +58,20 @@ def carpet_detail_view(request, carpet_id):
 
 def collectionList(request, collection_id):
     designColors = DesignInColor.objects.filter(design__collection__id=collection_id)
-    context = {"designs": designColors}
+    paginator = Paginator(designColors, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"page_obj" : page_obj}
     return render(request, "cube/shop/shop-listing.html", context)
 
 def sizeList(request, size_id):
     available_carpets = Carpet.objects.filter(size__id = size_id)
     carpet_filter = CarpetPropertyFilter(request.GET, queryset=available_carpets)
-    context = {"filter": carpet_filter}
+    paginator = Paginator(carpet_filter.qs, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"page_obj" : page_obj}
     return render(request, "cube/shop/shop-listing-sidebar.html", context)
 
-class CarpetDetailView(DetailView):
-    model = Carpet
-    template_name = "carpet-detail.html"
-
-class CarpetListView(ListView):
-    model = Carpet
-    template_name = "carpet_list.html"
-
-class DesignDetailView(DetailView):
-    model = Design
-    template_name = "design_detail.html"
