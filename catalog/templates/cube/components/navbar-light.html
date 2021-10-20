@@ -1,5 +1,5 @@
 {% load static %}
-
+{% load show_collections %}
 <!-- navbar -->
 <nav id="mainNav" class="navbar navbar-expand-lg navbar-sticky navbar-light border-bottom">
 <div class="container">
@@ -55,40 +55,13 @@
         <li class="nav-item dropdown dropdown-hover">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-1" role="button" data-bs-toggle="dropdown"
             aria-expanded="false">
-            Landings
+            Collections
         </a>
 
         <ul class="dropdown-menu dropdown-menu-md" aria-labelledby="navbarDropdown-1">
-            <li><a class="dropdown-item "
-                href="./startup.html">Startup</a></li>
-            <li><a class="dropdown-item " href="./saas.html">Saas</a>
-            </li>
-            <li><a class="dropdown-item "
-                href="./coworking.html">Coworking</a></li>
-            <li><a class="dropdown-item "
-                href="./job-board.html">Job Board</a></li>
-            <li><a class="dropdown-item "
-                href="./agency.html">Agency</a>
-            </li>
-            <li><a class="dropdown-item " href="./blog.html">Blog</a>
-            </li>
-            <li><a class="dropdown-item "
-                href="./product.html">Product</a></li>
-            <li><a class="dropdown-item " href="./app.html">App</a>
-            </li>
-            <li><a class="dropdown-item " href="./shop.html">Shop</a>
-            </li>
-            <li><a class="dropdown-item "
-                href="./event.html">Event</a></li>
-            <li><a class="dropdown-item "
-                href="./course.html">Course</a>
-            </li>
-            <li><a class="dropdown-item "
-                href="./service.html">Service</a></li>
-            <li><a class="dropdown-item "
-                href="./software.html">Software</a></li>
-            <li><a class="dropdown-item "
-                href="./documentation.html">Documentation</a></li>
+                            
+        {% show_collections %}
+           
         </ul>
         </li>
         <li class="nav-item dropdown dropdown-hover">
