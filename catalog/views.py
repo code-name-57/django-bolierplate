@@ -18,13 +18,19 @@ class CarpetPropertyFilter(django_filters.FilterSet):
         fields = {'designColor__color', 'designColor__design__collection'}
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(request, "index.html")
+
+def login(request):
+    return render(request, "cube/shop/sign-in.html")
+
+def signup(request):
+    return render(request, "cube/shop/register.html")
 
 def showAllCarpets(request):
     available_carpets = Carpet.objects.all()
     carpet_filter = CarpetPropertyFilter(request.GET, queryset=available_carpets)
     context = {"filter": carpet_filter}
-    return render(request, "shop.html", context)
+    return render(request, "cube/shop/shop-listing-sidebar.html", context)
 
 class DesignInColorPropertyFilter(django_filters.FilterSet):
     color = django_filters.ModelMultipleChoiceFilter(label='Colors', field_name='color', queryset=Color.objects.all(), widget=CheckboxSelectMultiple)
@@ -44,6 +50,7 @@ def carpet_detail_view(request, design_id, color_id, size_id):
     return render(request, "shop.html", {"carpet": carpet})
     breakpoint()
     pass
+
 class CarpetDetailView(DetailView):
     model = Carpet
     template_name = "carpet-detail.html"

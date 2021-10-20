@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from rest_framework import routers
 
@@ -17,7 +18,11 @@ router.register(r'Sizes', SizeViewSet)
 router.register(r'Colors', ColorViewSet)
 
 urlpatterns = [
+    path('about', TemplateView.as_view(template_name='cube/company/about.html'), name='about'),
     path('',  views.showAllCarpets, name='list'),
+    path('product', TemplateView.as_view(template_name='cube/shop/shop-product.html'), name='product'),
+    path('login', views.login, name='login'),
+    path('register', views.signup, name='signup'),
     path('list', views.showAllCarpets, name='list'),
     path('design_list', views.showAllDesigns, name = 'list2'),
     path('product/<design_id>/<color_id>/<size_id>', views.CarpetDetailView.as_view(), name='details'),

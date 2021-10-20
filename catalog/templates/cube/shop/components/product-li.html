@@ -1,0 +1,13 @@
+{% load static %}
+<div class="col-md-6 col-xl-4">
+    <div class="product">
+      <figure class="product-image">
+        <a href="#!">
+          <img src="{% static 'assets/images/products/product-1.jpg' %}" alt="Image" />
+          <img src="{% static 'assets/images/products/product-1-2.jpg' %}" alt="Image" />
+        </a>
+      </figure>
+      <a class="product-title" href="#!">{{ carpet }}</a>
+      <span class="product-price">{{ carpet.size }} </span>
+    </div>              
+</div>
