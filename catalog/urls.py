@@ -1,3 +1,8 @@
+"""
+These are the main website uls and also handles the API
+call used in the display of the website.
+"""
+
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
@@ -20,7 +25,6 @@ router.register(r'Colors', ColorViewSet)
 urlpatterns = [
     path('about', TemplateView.as_view(template_name='cube/company/about.html'), name='about'),
     path('',  views.showAllCarpets, name='list'),
-    path('product', TemplateView.as_view(template_name='cube/shop/shop-product.html'), name='product'),
     path('login', views.login, name='login'),
     path('register', views.signup, name='signup'),
     path('list', views.showAllCarpets, name='list'),

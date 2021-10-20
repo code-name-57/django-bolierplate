@@ -9,8 +9,7 @@
 <body>
 
   {% include "cube/components/navbar-light.html" %}
-  
-  
+
   <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasCart" aria-labelledby="offcanvasCart">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasCartLabel">Shopping Cart</h5>
@@ -135,9 +134,20 @@
             </div>
           </div>
           <div class="col-lg-6 col-xl-5">
-            <h1 class="mb-1">Red Organic Cotton Sweater</h1>
-            <div class="fs-5 mb-3">$49 <s class="text-muted ms-1">$39</s></div>
+            <h1 class="mb-1">{{ carpet.designColor.design.name }}</h1>
+            <div class="fs-5 mb-3">{{ carpet.designColor.color }} <s class="text-muted ms-1">$39</s></div>
+            <div class="dropdown">
+              <a class="underline text-black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Price high to low <i class="bi bi-chevron-down"></i>
+              </a>
 
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </div>
             <p class="text-secondary mb-3">This coat has a blazer silhouette with notched lapels and front welt pockets.
               Transition into the new
               season with this tailored outerwear piece and style it with a cropped tee and trousers. </p>

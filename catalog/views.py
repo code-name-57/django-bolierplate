@@ -43,13 +43,11 @@ def showAllDesigns(request):
     available_Designs = DesignInColor.objects.all()
     design_filter = DesignInColorPropertyFilter(request.GET, queryset=available_Designs)
     context = {"filter": design_filter}
-    return render(request, "design_index.html", context)
+    return render(request, "cube/shop/shop-listing.html", context)
 
 def carpet_detail_view(request, design_id, color_id, size_id):
-    carpet = get_object_or_404(Carpet, design__id=design_id, color__id=color_id, size__id=size_id)
-    return render(request, "shop.html", {"carpet": carpet})
-    breakpoint()
-    pass
+    carpet = get_object_or_404(Carpet, designColor__design__id=design_id, designColor__color__id=color_id, size__id=size_id)
+    return render(request, "cube/shop/shop-product.html", {"carpet": carpet})
 
 class CarpetDetailView(DetailView):
     model = Carpet
