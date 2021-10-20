@@ -6,7 +6,7 @@ from django.views.generic.list import ListView
 import django_filters
 from .models import Carpet, Design, Collection, DesignInColor, Color, Size
 from django.views.generic import DetailView
-
+from django.core.paginator import Paginator
 # from catalog import models
 
 class CarpetPropertyFilter(django_filters.FilterSet):
@@ -29,7 +29,11 @@ def signup(request):
 def showAllCarpets(request):
     available_carpets = Carpet.objects.all()
     carpet_filter = CarpetPropertyFilter(request.GET, queryset=available_carpets)
-    context = {"filter": carpet_filter}
+    paginator = Paginator(carpet_filter.qs, 15)
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {"page_obj" : page_obj}
     return render(request, "cube/shop/shop-listing-sidebar.html", context)
 
 class DesignInColorPropertyFilter(django_filters.FilterSet):
