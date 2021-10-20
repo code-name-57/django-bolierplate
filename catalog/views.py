@@ -57,6 +57,17 @@ def carpet_detail_view(request, carpet_id):
     otherDesigns = DesignInColor.objects.filter(color=carpet.designColor.color, design__collection=carpet.designColor.design.collection)
     return render(request, "cube/shop/shop-product.html", {"carpet": carpet, "otherSizes": otherSizes, "otherColors": otherColors, "otherDesigns": otherDesigns})
 
+def collectionList(request, collection_id):
+    designColors = DesignInColor.objects.filter(design__collection__id=collection_id)
+    context = {"designs": designColors}
+    return render(request, "cube/shop/shop-listing.html", context)
+
+def sizeList(request, size_id):
+    available_carpets = Carpet.objects.filter(size__id = size_id)
+    carpet_filter = CarpetPropertyFilter(request.GET, queryset=available_carpets)
+    context = {"filter": carpet_filter}
+    return render(request, "cube/shop/shop-listing-sidebar.html", context)
+
 class CarpetDetailView(DetailView):
     model = Carpet
     template_name = "carpet-detail.html"
