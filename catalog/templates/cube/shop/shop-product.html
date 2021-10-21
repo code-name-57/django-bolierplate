@@ -134,12 +134,15 @@
             </div>
           </div>
           <div class="col-lg-6 col-xl-5">
-            <h1 class="mb-1">{{ carpet.designColor.design.name }}</h1>
-            <div class="fs-5 mb-3">{{ carpet.designColor.color }} <s class="text-muted ms-1">$39</s></div>
-            <div class="dropdown">
+            <h1 class="mb-1">{{ carpet.designColor.design.collection.name }} {{ carpet.designColor.design.name }}</h1>
+            <div class="fs-5 mb-3"> {{ carpet.designColor.color.primary_color }} / {{ carpet.designColor.color.texture_color }}</div>
+            <div class="fs-6 mb-4"> {{carpet.size}} </div>
+
+
+             <div class="dropdown fs-6 mb-4">
               <a class="underline text-black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
                 aria-expanded="false">
-                Price high to low <i class="bi bi-chevron-down"></i>
+                Other Sizes  <i class="bi bi-chevron-down"></i>
               </a>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -148,9 +151,11 @@
                 {% endfor %}
               </ul>
             </div>
-            <p class="text-secondary mb-3">This coat has a blazer silhouette with notched lapels and front welt pockets.
-              Transition into the new
-              season with this tailored outerwear piece and style it with a cropped tee and trousers. </p>
+
+            <br>
+            {% if carpet.designColor.design.collection.description %}
+            <p class="text-secondary mb-3">{{carpet.designColor.design.collection.description}}</p>
+            {% endif %}
 
             <div class="d-flex align-items-center mb-3">
               <ul class="rating text-yellow me-2 fs-6">
@@ -166,6 +171,7 @@
 
 
             <div class="accordion mb-3" id="accordion-1">
+              {% if carpet.designColor.design.description %}}
               <div class="accordion-item">
                 <h2 class="accordion-header" id="heading-1-1">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -176,12 +182,11 @@
                 <div id="collapse-1-1" class="accordion-collapse collapse" aria-labelledby="heading-1-1"
                   data-bs-parent="#accordion-1">
                   <div class="accordion-body">
-                    <p class="text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo,
-                      voluptas. Quibusdam, quia. Accusantium, quo maxime est ullam at voluptas aspernatur. Iure
-                      assumenda labore esse vero ad. Deleniti ea totam dolorem.</p>
+                    <p class="text-secondary">{{carpet.designColor.design.description}}</p>
                   </div>
                 </div>
               </div>
+              {% endif %}
               <div class="accordion-item">
                 <h2 class="accordion-header" id="heading-1-2">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -321,8 +326,8 @@
                     <img src="{% static 'assets/images/products/product-1-2.jpg' %}" alt="Image" />
                   </a>
                 </figure>
-                <a class="product-title" href="#!">{{designColor.design.name}}</a>
-                <span class="product-price">{{designColor.color}}</span>
+                <a class="product-title" href="#!">{{designColor.design.collection}} {{designColor.design.name}}</a>
+                <span class="product-price">{{designColor.color.primary_color}} / {{designColor.color.texture_color}}</span>
               </div>            
             </div>
             {% endfor %}
@@ -350,8 +355,8 @@
                     <img src="{% static 'assets/images/products/product-1-2.jpg '%}" alt="Image" />
                   </a>
                 </figure>
-                <a class="product-title" href="#!">{{designColor.design.name}}</a>
-                <span class="product-price">{{designColor.color}} </span>
+                <a class="product-title" href="#!">{{designColor.design.collection}} {{designColor.design.name}}</a>
+                <span class="product-price">{{designColor.color.primary_color}} / {{designColor.color.texture_color}}</span>
               </div>            
             </div>
             {% endfor %}

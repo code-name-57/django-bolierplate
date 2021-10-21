@@ -33,7 +33,7 @@ def showAllCarpets(request):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj" : page_obj}
+    context = {"page_obj" : page_obj, "form" : carpet_filter.form}
     return render(request, "cube/shop/shop-listing-sidebar.html", context)
 
 class DesignInColorPropertyFilter(django_filters.FilterSet):
@@ -72,6 +72,6 @@ def sizeList(request, size_id):
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj" : page_obj}
+    context = {"page_obj" : page_obj, "form" : carpet_filter.form}
     return render(request, "cube/shop/shop-listing-sidebar.html", context)
 
