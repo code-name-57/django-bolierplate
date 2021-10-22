@@ -25,8 +25,7 @@ router.register(r'Colors', ColorViewSet)
 urlpatterns = [
     path('about', TemplateView.as_view(template_name='cube/company/about.html'), name='about'),
     path('',  views.showAllCarpets, name='list'),
-    path('login', views.login, name='login'),
-    path('register', views.signup, name='signup'),
+
     path('list', views.showAllCarpets, name='list'),
 
     path('collection/<int:collection_id>', views.collectionList, name='collection'),
