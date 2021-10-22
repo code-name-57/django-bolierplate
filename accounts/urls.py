@@ -21,6 +21,7 @@ urlpatterns = [
     path('settings', TemplateView.as_view(template_name='cube/account/account-settings.html'), name='settings'),
     path('account', TemplateView.as_view(template_name='cube/account/account.html'), name='account'),
     path('forgot', TemplateView.as_view(template_name='cube/account/forgot-password.html'), name='forgot'),
-
+    path('logout', TemplateView.as_view(template_name='cube/shop/shop.html'), name='logout'),
+    path('cart', TemplateView.as_view(template_name='cube/shop/shop-cart.html'), name='cart'),
 
 ]
