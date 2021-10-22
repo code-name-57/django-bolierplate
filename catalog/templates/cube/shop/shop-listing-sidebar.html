@@ -99,13 +99,12 @@
       <div class="container mt-5">
         <div class="row g-3 g-md-5 align-items-end mb-5">
           <div class="col-md-6">
-            <h1 class="mb-2">Equipment</h1>
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="#">Shop</a></li>
-                <li class="breadcrumb-item"><a href="#">Category</a></li>
-                <li class="breadcrumb-item active" aria-current="page">Equipment</li>
+                <li class="breadcrumb-item"><a href={% url 'list' %}>Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Sizes</a></li>
               </ol>
+              <h4 class="mb-2">{{size}}</h4>
             </nav>
           </div>
           <div class="col-md-6 text-md-end">

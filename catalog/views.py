@@ -10,12 +10,12 @@ from django.core.paginator import Paginator
 # from catalog import models
 
 class CarpetPropertyFilter(django_filters.FilterSet):
-    designColor__color = django_filters.ModelMultipleChoiceFilter(label='Colors', queryset=Color.objects.all(), widget=CheckboxSelectMultiple)
+    # designColor__color = django_filters.ModelMultipleChoiceFilter(label='Colors', queryset=Color.objects.all(), widget=CheckboxSelectMultiple(attrs={'class': 'form-check form-check-minimal'}))
     designColor__design__collection = django_filters.ModelMultipleChoiceFilter(label='Collections', queryset=Collection.objects.all(), widget=CheckboxSelectMultiple)
     size = django_filters.ModelMultipleChoiceFilter(label='Sizes', queryset=Size.objects.all(), widget=CheckboxSelectMultiple)
     class Meta:
         model = Carpet
-        fields = {'designColor__color', 'designColor__design__collection'}
+        fields = {'designColor__design__collection'}
 
 def index(request):
     return render(request, "index.html")
@@ -57,21 +57,23 @@ def carpet_detail_view(request, carpet_id):
     return render(request, "cube/shop/shop-product.html", {"carpet": carpet, "otherSizes": otherSizes, "otherColors": otherColors, "otherDesigns": otherDesigns})
 
 def collectionList(request, collection_id):
+    collection = get_object_or_404(Collection, id=collection_id)
     designColors = DesignInColor.objects.filter(design__collection__id=collection_id)
     paginator = Paginator(designColors, 15)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj" : page_obj}
+    context = {"page_obj" : page_obj, "collection" : collection}
     return render(request, "cube/shop/shop-listing.html", context)
 
 def sizeList(request, size_id):
     available_carpets = Carpet.objects.filter(size__id = size_id)
+    size = get_object_or_404(Size, id = size_id)
     carpet_filter = CarpetPropertyFilter(request.GET, queryset=available_carpets)
     paginator = Paginator(carpet_filter.qs, 15)
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj" : page_obj, "form" : carpet_filter.form}
+    context = {"page_obj" : page_obj, "form" : carpet_filter.form, "size" : size}
     return render(request, "cube/shop/shop-listing-sidebar.html", context)
 
