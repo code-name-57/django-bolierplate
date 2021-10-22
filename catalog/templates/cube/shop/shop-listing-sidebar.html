@@ -129,8 +129,19 @@
       </div>
       <div class="container">
         <div class="row justify-content-between">
-          <div class="col-xl-3 d-none d-xl-block">
-
+          {% include "cube/shop/components/sidebar2.html" %}
+          <!-- <div class="col-xl-3 d-none d-xl-block">
+            <div class="widget">
+              <form method="get">
+                <ul class="list-unstyled">
+                  {{ form.as_ul }}
+                </ul>
+               
+                <input class="btn" id="submit-filter" type="submit" />
+                <a class="btn" id="clear-filter" href="{% url 'list'%}">clear</a>
+              </form>
+            </div>
+            
             <div class="widget">
               <span class="d-flex eyebrow text-muted mb-2">Brands</span>
               <ul class="list-unstyled">
@@ -207,7 +218,7 @@
               <div class="range-slider-selection">Price: <span class="range-slider-value" id="range-min"></span>
                 &mdash; <span class="range-slider-value" id="range-max"></span></div>
             </div>
-          </div>
+          </div> -->
           <div class="col-xl-9">
             <div class="row g-3">
               {% if page_obj %}
