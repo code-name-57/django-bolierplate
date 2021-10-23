@@ -64,8 +64,13 @@
               <div class="product">
                 <figure class="product-image">
                   <a href="#!">
-                    <img src="{% static 'assets/images/products/product-1.jpg' %}" alt="Image" />
-                    <img src="{% static 'assets/images/products/product-1-2.jpg' %}" alt="Image" />
+                    {% if design.image_file %}
+                      <img src={{design.image_file.url}} alt="Image" />
+                      <img src={{design.image_file.url}} alt="Image" />
+                    {% else %}
+                      <img src="{% static 'assets/images/products/product-1.jpg' %}" alt="Image" />
+                      <img src="{% static 'assets/images/products/product-1-2.jpg' %}" alt="Image" />
+                    {% endif %}
                   </a>
                 </figure>
                 <a class="product-title" href="#!">{{design.design.name}}</a>
