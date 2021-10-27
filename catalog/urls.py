@@ -33,6 +33,8 @@ urlpatterns = [
 
     path('design_list', views.showAllDesigns, name = 'list2'),
     path('details/<int:carpet_id>', views.carpet_detail_view, name='carpets'),
+    path('design/<int:design_id>', views.design_detail_view, name='design'),
+
     path('rest/', include(router.urls)),
 
 ]

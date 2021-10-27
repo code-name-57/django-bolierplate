@@ -56,6 +56,13 @@ def carpet_detail_view(request, carpet_id):
     otherDesigns = DesignInColor.objects.filter(color=carpet.designColor.color, design__collection=carpet.designColor.design.collection)
     return render(request, "cube/shop/shop-product.html", {"carpet": carpet, "otherSizes": otherSizes, "otherColors": otherColors, "otherDesigns": otherDesigns})
 
+def design_detail_view(request, design_id):
+    design = get_object_or_404(DesignInColor, id=design_id)
+    otherSizes = Carpet.objects.filter(designColor = design)
+    otherColors = DesignInColor.objects.filter(design=design.design)
+    otherDesigns = DesignInColor.objects.filter(color=design.color, design__collection=design.design.collection)
+    return render(request, "cube/shop/shop-designColor.html", {"designColor": design, "otherSizes": otherSizes, "otherColors": otherColors, "otherDesigns": otherDesigns})
+
 def collectionList(request, collection_id):
     collection = get_object_or_404(Collection, id=collection_id)
     designColors = DesignInColor.objects.filter(design__collection__id=collection_id)

@@ -63,7 +63,7 @@
             <div class="col-md-6 col-lg-4">
               <div class="product">
                 <figure class="product-image">
-                  <a href="#!">
+                  <a href={% url "design" design_id=design.id %}>
                     {% if design.image_file %}
                       <img src={{design.image_file.url}} alt="Image" />
                       <img src={{design.image_file.url}} alt="Image" />
@@ -73,7 +73,7 @@
                     {% endif %}
                   </a>
                 </figure>
-                <a class="product-title" href="#!">{{design.design.name}}</a>
+                <a class="product-title" href={% url "design" design_id=design.id %}>{{design.design.name}}</a>
                 <span class="product-price">
                   {{ design.color.primary_color }} / {{ design.color.texture_color }}
                 </span>
