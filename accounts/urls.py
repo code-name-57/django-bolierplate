@@ -11,6 +11,8 @@ from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 from rest_framework import routers
 
+from rest_framework.authtoken.views import obtain_auth_token
+
 from .views import SignUpView
 
 
@@ -25,5 +27,5 @@ urlpatterns = [
     path('account', TemplateView.as_view(template_name='cube/account/account.html'), name='account'),
     path('forgot', TemplateView.as_view(template_name='cube/account/forgot-password.html'), name='forgot'),
     path('cart', TemplateView.as_view(template_name='cube/shop/shop-cart.html'), name='cart'),
-
+    path('api-token-auth', obtain_auth_token, name='api_token_auth'),
 ]

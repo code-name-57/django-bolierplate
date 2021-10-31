@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'import_export',
     'colorfield',
     'rest_framework',
+    'rest_framework.authtoken',
     'crispy_forms',
     'storages',
     'catalog',
@@ -70,6 +71,11 @@ INSTALLED_APPS = [
     'django_filters',
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
