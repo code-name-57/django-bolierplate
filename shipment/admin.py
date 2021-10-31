@@ -30,11 +30,16 @@ class ShipmentAdmin(admin.ModelAdmin):
     @admin.action(description="Mark as arrived")
     def mark_as_arrived(self, request, queryset):
         for shipment in queryset:
-            shipment.available = True
-            for shItem in ShipmentItem.objects.filter(shipment=shipment):
-                print(shItem.quantity)
-                shItem.carpet.inventory = shItem.quantity + shItem.carpet.inventory
-                shItem.carpet.save()
+            if shipment.available:
+                self.message_user(request, str(shipment) + " : Shipment already marked as arrived", messages.WARNING)
+            else:
+                shipment.available = True
+                for shItem in ShipmentItem.objects.filter(shipment=shipment):
+                    print(shItem.quantity)
+                    shItem.carpet.inventory = shItem.quantity + shItem.carpet.inventory
+                    shItem.carpet.save()
+                shipment.save()
+                self.message_user(request, str(shipment) + " : Shipment marked as arrived succesfully", messages.SUCCESS)
 
 admin.site.register(Shipment, ShipmentAdmin)
 admin.site.register([ShipmentItem])
