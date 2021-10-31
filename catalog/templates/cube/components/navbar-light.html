@@ -20,10 +20,14 @@
         <i class="bi bi-person"></i>
         </a>
     </li>
+    {% if request.user.is_authenticated %}
+    Hi {{request.user.username}}
+    {% endif %}
     <li class="nav-item dropdown dropdown-hover d-none d-lg-block">
         <a class="nav-link nav-icon" role="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
         aria-expanded="false">
         <i class="bi bi-person"></i>
+ 
         </a>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
         
@@ -35,13 +39,18 @@
             href={% url 'orders' %}>Orders</a></li>
         <li><a class="dropdown-item "
             href={% url 'billing' %}>Billing</a></li>
+
+
+        {% if request.user.is_authenticated %}
+        <li><a class="dropdown-item text-red" href={% url 'logout' %}>Log Out</a></li>
+        {% else %}
         <li><a class="dropdown-item "
             href={% url 'login' %}>Sign in</a></li>
         <li><a class="dropdown-item "
             href={% url 'register' %}>Register</a></li>
         <li><a class="dropdown-item "
             href={% url 'forgot' %}>Forgot Password</a></li>
-        <li><a class="dropdown-item text-red" href={% url 'logout' %}>Log Out</a></li>
+        {% endif %}
         </ul>
     </li>
     <li class="nav-item d-lg-none">
@@ -72,88 +81,7 @@
            
         </ul>
         </li>
-        <!-- <li class="nav-item dropdown dropdown-hover">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-2" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Pages
-        </a>
-        <div class="dropdown-menu dropdown-menu-custom" aria-labelledby="navbarDropdown-2">
-            <div class="row g-0">
-            <div class="col-6">
-                <div class="p-4">
-                <span class="dropdown-label">Company</span>
-                <a class="dropdown-item "
-                    href="./about.html">About</a>
-                <a class="dropdown-item "
-                    href="./pricing.html">Pricing</a>
-                <a class="dropdown-item " href="./faq.html">FAQ</a>
-                <a class="dropdown-item "
-                    href="./terms.html">Terms</a>
-                <a class="dropdown-item "
-                    href="./services.html">Services</a>
-                <a class="dropdown-item "
-                    href="./job-listing.html">Job Listing</a>
-                <a class="dropdown-item "
-                    href="./job-post.html">Job Post</a>
-                <span class="dropdown-label">Portfolio</span>
-                <a class="dropdown-item "
-                    href="./portfolio-grid.html">Grid</a>
-                <a class="dropdown-item "
-                    href="./portfolio-list.html">List</a>
-                <a class="dropdown-item "
-                    href="./case-study.html">Case Study</a>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="p-4">
-                <span class="dropdown-label">Blog</span>
-                <a class="dropdown-item "
-                    href="./blog-listing.html">Listing</a>
-                <a class="dropdown-item "
-                    href="./blog-post.html">Post</a>
-                <span class="dropdown-label">Contact</span>
-                <a class="dropdown-item "
-                    href="./contact.html">Classic</a>
-                <a class="dropdown-item "
-                    href="./contact-location.html">Location</a>
-                <span class="dropdown-label">Utilities</span>
-                <a class="dropdown-item " href="./404.html">404</a>
-                <a class="dropdown-item "
-                    href="./coming-soon.html">Coming Soon</a>
-                </div>
-            </div>
-            <div class="col-12">
-                <a href="" class="card card-arrow inverted bg-green">
-                <div class="card-footer mt-auto">
-                    <h4 class="lead lh-3 fw-light">Buy Cube</h4>
-                </div>
-                </a>
-            </div>
-            </div>
-        </div>
-        </li> -->
-        <!-- <li class="nav-item dropdown dropdown-hover">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-3" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false" data-bs-auto-close="outside">
-            Account
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown-3">
-            <li><a class="dropdown-item "
-                href={% url 'account' %}>Dashboard</a></li>
-            <li><a class="dropdown-item "
-                href={% url 'settings' %}>Settings</a></li>
-            <li><a class="dropdown-item "
-                href={% url 'orders' %}>Orders</a></li>
-            <li><a class="dropdown-item "
-                href={% url 'billing' %}>Billing</a></li>
-            <li><a class="dropdown-item "
-                href={% url 'login' %}>Sign in</a></li>
-            <li><a class="dropdown-item "
-                href={% url 'register' %}>Register</a></li>
-            <li><a class="dropdown-item "
-                href={% url 'forgot' %}>Forgot Password</a></li>
-        </ul>
-        </li> -->
+
 
         <li class="nav-item dropdown dropdown-hover">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-3" role="button" data-bs-toggle="dropdown"
@@ -164,56 +92,7 @@
                 {% show_sizes %}
             </ul>
         </li>
-        <!-- <li class="nav-item dropdown dropdown-hover">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-4" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false" data-bs-auto-close="outside">
-            Shop
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown-4">
-            <li><a class="dropdown-item "
-                href="./shop-product.html">Product</a></li>
-            <li class="dropend dropend-hover">
-            <a class="dropdown-item dropdown-toggle  active"
-                href="#" id="navbarDropend-1" data-bs-toggle="dropdown" aria-expanded="false"
-                data-bs-auto-close="outside">Listing</a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropend-1">
-                <li><a class="dropdown-item "
-                    href="./shop-listing.html">Full width</a></li>
-                <li><a class="dropdown-item active"
-                    href="./shop-listing-sidebar.html">Sidebar</a></li>
-            </ul>
-            </li>
-            <li><a class="dropdown-item "
-                href="./shop-cart.html">Cart</a></li>
-            <li><a class="dropdown-item "
-                href="./shop-checkout.html">Checkout</a></li>
-        </ul>
-        </li>
-        <li class="nav-item dropdown dropdown-hover">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-5" role="button" data-bs-toggle="dropdown"
-            aria-expanded="false">
-            Docs
-        </a>
-        <ul class="dropdown-menu dropdown-menu-detailed" aria-labelledby="navbarDropdown-5">
-            <li><a class="dropdown-item " href="./docs/index.html">
-                <span>
-                <i class="bi bi-book"></i>
-                Get Started
-                <small>Customising and building</small>
-                </span>
-            </a>
-            </li>
-            <li><a class="dropdown-item "
-                href="./docs/accordion.html">
-                <span>
-                <i class="bi bi-grid"></i>
-                Components
-                <small>Full list of components</small>
-                </span>
-            </a>
-            </li>
-        </ul>
-        </li> -->
+
         <li class="nav-item d-lg-none">
         <a href="https://themes.getbootstrap.com/product/cube-multipurpose-template-ui-kit/"
             class="nav-link text-primary">Buy Cube</a>
@@ -238,9 +117,23 @@
         <li class="nav-item">
         <a class="nav-link " href={% url 'billing' %}>Billing</a>
         </li>
+        {% if request.user.is_authenticated %}
         <li class="nav-item">
         <a class="nav-link text-red" href={% url 'logout' %}>Log Out</a>
         </li>
+        {% else %}
+            <li class="nav-item">
+                <a class="nav-link text-red" href={% url 'login' %}>Sign in</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-red" href={% url 'register' %}>Register</a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-red" href={% url 'forgot' %}>Forgot Password</a>
+            </li>
+        {% endif %}
     </ul>
     </div>
 
