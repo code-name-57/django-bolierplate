@@ -10,7 +10,6 @@ from django.core.paginator import Paginator
 # from catalog import models
 
 class CarpetPropertyFilter(django_filters.FilterSet):
-    # designColor__color = django_filters.ModelMultipleChoiceFilter(label='Colors', queryset=Color.objects.all(), widget=CheckboxSelectMultiple(attrs={'class': 'form-check form-check-minimal'}))
     designColor__design__collection = django_filters.ModelMultipleChoiceFilter(label='Collections', queryset=Collection.objects.all(), widget=CheckboxSelectMultiple)
     size = django_filters.ModelMultipleChoiceFilter(label='Sizes', queryset=Size.objects.all(), widget=CheckboxSelectMultiple)
     class Meta:
@@ -19,12 +18,6 @@ class CarpetPropertyFilter(django_filters.FilterSet):
 
 def index(request):
     return render(request, "index.html")
-
-def login(request):
-    return render(request, "cube/shop/sign-in.html")
-
-def signup(request):
-    return render(request, "cube/shop/register.html")
 
 def showAllCarpets(request):
     available_carpets = Carpet.objects.all()
