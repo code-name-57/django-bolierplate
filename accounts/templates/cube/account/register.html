@@ -2,12 +2,11 @@
 {% load static %}
 
 {% block title %}
-<title>AV Rugs : Sign in</title>
+<title>AV Rugs : Sign Up</title>
 {% endblock %}
 {% block content %}
 <body>
 {% include "cube/components/navbar-dark.html" %}
-
 
 <section class="bg-black overflow-hidden">
     <div class="py-15 py-xl-20 d-flex flex-column container level-3 min-vh-100">
@@ -24,17 +23,31 @@
                     class="bi bi-google"></i></a>
               </div>
               <div class="text-muted text-center small py-2">or use your email</div>
-              <form action="#">
+              <form method="POST">
+                {% csrf_token %}
                 <div class="form-floating mb-2">
                   <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
                   <label for="floatingInput">Email address</label>
                 </div>
+
                 <div class="form-floating mb-2">
-                  <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                  <input type="text" class="form-control" name="username" id="floatingInput" placeholder="john_doe">
+                  <label for="floatingInput">Username</label>
+                </div>
+
+                <div class="form-floating mb-2">
+                  <input type="password" class="form-control" name="password1" id="floatingPassword" placeholder="Password">
                   <label for="floatingPassword">Password</label>
                 </div>
+
+                <div class="form-floating mb-2">
+                  <input type="password" class="form-control" name="password2" id="floatingPassword" placeholder="Confirm Password">
+                  <label for="floatingPassword">Confirm Password</label>
+                </div>
+
+
                 <div class="d-grid mb-2">
-                  <a href="" class="btn btn-lg btn-primary">Create Account</a>
+                  <button type="submit" class="btn btn-lg btn-primary">Create Account</a>
                 </div>
               </form>
             </div>
@@ -48,7 +61,7 @@
     </div>
     <figure class="background background-overlay" style="background-image: url({% static './assets/images/small-3.jpg' %})"></figure>
   </section>
-  <% include "cube/components/jsblock.html" %}
+  {% include "cube/components/jsblock.html" %}
 
 </body>
 {% endblock content %}
