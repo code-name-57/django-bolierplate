@@ -5,12 +5,12 @@
 {% if theme == 0 %}
 <nav id="mainNav" class="navbar navbar-expand-lg navbar-sticky navbar-light border-bottom">
     <div class="container">
-        <a href="{% url 'list' %}" class="navbar-brand"><img src="{% static './assets/images/logo/logo-dark.svg' %}"
+        <a href={% url 'list' %} class="navbar-brand"><img src="{% static './assets/images/logo/logo-dark.svg' %}"
                 alt="Logo"></a>
 {% else %}
 <nav id="mainNav" class="navbar navbar-expand-lg navbar-sticky navbar-dark">
     <div class="container">
-        <a href="./index.html" class="navbar-brand"><img src="{% static './assets/images/logo/logo-light.svg' %}"
+        <a href={% url 'list' %} class="navbar-brand"><img src="{% static './assets/images/logo/logo-light.svg' %}"
                 alt="Logo"></a>
 {% endif %}
         <!-- secondary -->

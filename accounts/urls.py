@@ -19,12 +19,14 @@ from .views import SignUpView
 urlpatterns = [
     path('login', auth_views.LoginView.as_view(template_name='cube/account/sign-in.html'), name='login'),
     path('logout', auth_views.LogoutView.as_view(next_page='list'), name='logout'),
-    path('forgot', auth_views.PasswordResetView.as_view(template_name='cube/account/forgot-password.html', html_email_template_name='cube/account/password-reset-email.html', subject_template_name='cube/account/password-reset-subject.txt'), name='forgot'),
-    path('password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='cube/account/forgot-password-done.html'), name='password_reset_done'),
+    
+    path('forgot', auth_views.PasswordResetView.as_view(template_name='cube/account/password-reset/forgot-password.html', html_email_template_name='cube/account/password-reset/password-reset-email.html', subject_template_name='cube/account/password-reset/password-reset-subject.txt'), name='forgot'),
+    path('password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='cube/account/password-reset/forgot-password-done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/',
-        auth_views.PasswordResetConfirmView.as_view(template_name='cube/account/forgot-password-confirm.html'), name='password_reset_confirm'),
-    path('reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name='cube/account/forgot-password-complete.html'), name='password_reset_complete'),
+        auth_views.PasswordResetConfirmView.as_view(template_name='cube/account/password-reset/forgot-password-confirm.html'), name='password_reset_confirm'),
+    path('reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name='cube/account/password-reset/forgot-password-complete.html'), name='password_reset_complete'),
     # path('signup', SignUpView.as_view(), name='signup' ),
+    
     path('register', SignUpView.as_view(), name='register'),
     path('billing', TemplateView.as_view(template_name='cube/account/account-billing.html'), name='billing'),
     path('orders', TemplateView.as_view(template_name='cube/account/account-orders.html'), name='orders'),
