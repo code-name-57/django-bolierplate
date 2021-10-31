@@ -16,7 +16,7 @@ class ShipmentItemTabularInline(admin.TabularInline):
 
 class ShipmentAdmin(admin.ModelAdmin):
     inlines = [ShipmentItemTabularInline]
-    actions = ['process_packing_sheet']
+    actions = ['process_packing_sheet', 'mark_as_arrived']
 
     @admin.action(description='Process Packing Sheet')
     def process_packing_sheet(self, request, queryset):
@@ -27,6 +27,19 @@ class ShipmentAdmin(admin.ModelAdmin):
             else:
                 self.message_user(request, repr(error) + ". Packing list not processed. Please clean the packing sheet", messages.ERROR)
 
+    @admin.action(description="Mark as arrived")
+    def mark_as_arrived(self, request, queryset):
+        for shipment in queryset:
+            if shipment.available:
+                self.message_user(request, str(shipment) + " : Shipment already marked as arrived", messages.WARNING)
+            else:
+                shipment.available = True
+                for shItem in ShipmentItem.objects.filter(shipment=shipment):
+                    print(shItem.quantity)
+                    shItem.carpet.inventory = shItem.quantity + shItem.carpet.inventory
+                    shItem.carpet.save()
+                shipment.save()
+                self.message_user(request, str(shipment) + " : Shipment marked as arrived succesfully", messages.SUCCESS)
 
 admin.site.register(Shipment, ShipmentAdmin)
 admin.site.register([ShipmentItem])

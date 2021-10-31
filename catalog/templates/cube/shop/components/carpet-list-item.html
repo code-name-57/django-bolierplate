@@ -1,0 +1,32 @@
+{% load static %}
+<div class="col-md-6 col-xl-4">
+  <a href="{% url 'carpets' carpet_id=carpet.id %}" style="color: rgb(0, 0, 0)">
+  <div class="product">
+    <figure class="product-image">
+        {% if carpet.image_file %}
+          <img src={{carpet.image_file.url}} alt="Image" />
+          <img src={{carpet.image_file.url}} alt="Image" />
+        {% elif carpet.designColor.image_file %}
+          <img src={{carpet.designColor.image_file.url}} alt="Image" />
+          <img src={{carpet.designColor.image_file.url}} alt="Image" />
+        {% else %}
+          <img src="{% static 'assets/images/products/product-1.jpg' %}" alt="Image" />
+          <img src="{% static 'assets/images/products/product-1-2.jpg' %}" alt="Image" />
+        {% endif %}
+      </figure>
+      <span>
+        {{ carpet.designColor.design.collection.name }} {{ carpet.designColor.design.name }}
+      </span> 
+      <br>
+      <span class="product-price">
+        {{ carpet.designColor.color.primary_color }} / {{ carpet.designColor.color.texture_color }}
+      </span>
+      <br>
+      <span class="product-price">
+        {{ carpet.size }}
+      </span>
+        <br>
+        <br>
+    </div>
+  </a>
+</div>

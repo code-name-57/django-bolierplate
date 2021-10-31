@@ -1,0 +1,310 @@
+{% extends 'cube/components/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>AV Rugs : All Rugs</title>
+{% endblock %}
+
+{% block content %}
+<body>
+
+  {% include "cube/components/navbar.html" with theme=0 %}
+
+  {% include "cube/account/components/sidecart.html" %}
+
+
+
+  <div class="offcanvas-wrap">
+
+    <!-- presentation -->
+    <section class="py-20">
+      <div class="container mt-10">
+        <div class="row g-5 justify-content-center justify-content-lg-between">
+          <div class="col-lg-6 position-relative">
+            <div class="row g-1">
+              <div class="col-md-10 order-md-2">
+                <div class="carousel">
+                  <div
+                    data-carousel='{"mouseDrag": true, "navContainer": "#nav-1", "gutter": 8, "loop": true, "items": 1}'>
+                    {% if carpet.image_file %}
+                    <div class="item">
+                      <img src={{carpet.image_file.url}} alt="Image">
+                    </div>
+                    {% elif carpet.designColor.image_file %}
+                    <div class="item">
+                      <img src={{carpet.designColor.image_file.url}} alt="Image">
+                    </div>
+                    {% endif %}
+                    {% for otherSize in otherSizes %}
+                    {% if otherSize.image_file and otherSize.size != carpet.size %}
+                    <div class="item">
+                      <img src={{otherSize.image_file.url}} alt="Image">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 order-md-1">
+                <div class="carousel-thumbs d-flex flex-row flex-md-column" id="nav-1">
+
+                  {% if carpet.image_file %}
+                    <div>
+                      <img class="img-fluid" src={{carpet.image_file.url}} alt="Image">
+                    </div>
+                    {% elif carpet.designColor.image_file %}
+                    <div>
+                      <img class="img-fluid" src={{carpet.designColor.image_file.url}} alt="Image">
+                    </div>
+                    {% endif %}
+                    {% for otherSize in otherSizes %}
+                    {% if otherSize.image_file and otherSize.size != carpet.size %}
+                    <div>
+                      <img class="img-fluid" src={{otherSize.image_file.url}} alt="Image">
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-xl-5">
+            <h1 class="mb-1">{{ carpet.designColor.design.collection.name }} {{ carpet.designColor.design.name }}</h1>
+            <div class="fs-5 mb-3"> {{ carpet.designColor.color.primary_color }} / {{ carpet.designColor.color.texture_color }}</div>
+            <div class="fs-6 mb-4"> {{carpet.size}} </div>
+
+
+             <div class="dropdown fs-6 mb-4">
+              <a class="underline text-black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Other Sizes  <i class="bi bi-chevron-down"></i>
+              </a>
+
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                {% for otherSize in otherSizes %}
+                <li><a class="dropdown-item" href="{% url 'carpets' carpet_id=otherSize.id %}">{{otherSize.size}}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <br>
+            {% if carpet.designColor.design.collection.description %}
+            <p class="text-secondary mb-3">{{carpet.designColor.design.collection.description}}</p>
+            {% endif %}
+
+            <div class="d-flex align-items-center mb-3">
+              <ul class="rating text-yellow me-2 fs-6">
+                <li><i class="bi bi-star-fill"></i></li>
+                <li><i class="bi bi-star-fill"></i></li>
+                <li><i class="bi bi-star-fill"></i></li>
+                <li><i class="bi bi-star-fill"></i></li>
+                <li><i class="bi bi-star-fill"></i></li>
+              </ul>
+              <a href="" class="underline action fs-sm text-black">Read all 4 reviews <i
+                  class="bi bi-arrow-right"></i></a>
+            </div>
+
+
+            <div class="accordion mb-3" id="accordion-1">
+              {% if carpet.designColor.design.description %}}
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-1-1">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-1-1" aria-expanded="false" aria-controls="collapse-1-1">
+                    Description
+                  </button>
+                </h2>
+                <div id="collapse-1-1" class="accordion-collapse collapse" aria-labelledby="heading-1-1"
+                  data-bs-parent="#accordion-1">
+                  <div class="accordion-body">
+                    <p class="text-secondary">{{carpet.designColor.design.description}}</p>
+                  </div>
+                </div>
+              </div>
+              {% endif %}
+              <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-1-2">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapse-1-2" aria-expanded="false" aria-controls="collapse-1-2">
+                    Aditional Information
+                  </button>
+                </h2>
+                <div id="collapse-1-2" class="accordion-collapse collapse" aria-labelledby="heading-1-2"
+                  data-bs-parent="#accordion-1">
+                  <div class="accordion-body">
+                    <p class="text-secondary">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo,
+                      voluptas. Quibusdam, quia. Accusantium, quo maxime est ullam at voluptas aspernatur. Iure
+                      assumenda labore esse vero ad. Deleniti ea totam dolorem.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row g-1 align-items-center">
+              <div class="col">
+                <div class="d-grid">
+                  <a href="" class="btn btn-primary btn-lg rounded-pill">Add to cart</a>
+                </div>
+              </div>
+              <div class="col-auto">
+                <a href="" class="btn btn-outline-secondary btn-lg btn-icon rounded-circle"><i
+                    class="bi bi-heart-fill"></i></a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- reviews -->
+    <section class="py-15 py-xl-20 bg-light">
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col-xl-5 mb-5 mb-xl-0">
+            <h2 class="mb-2">Product Reviews</h2>
+            <a href="" class="underline action">Write a review <i class="bi bi-arrow-right"></i></a>
+          </div>
+          <div class="col-xl-7">
+            <div class="row g-2" data-masonry>
+              <div class="col-md-6">
+                <div class="card bg-white">
+                  <div class="card-body">
+                    <ul class="rating text-yellow fs-lg">
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                    </ul>
+                    <p class="fs-lg text-secondary my-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias
+                      quam
+                      ipsa
+                      dolorem et, consequatur ipsum</p>
+                    <p class="lh-1 fs-lg">Michael Doe</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card bg-white">
+                  <div class="card-body">
+                    <ul class="rating text-yellow fs-lg">
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star"></i></li>
+                    </ul>
+                    <p class="fs-lg text-secondary my-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                    <p class="lh-1 fs-lg">Michael Doe</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card bg-white">
+                  <div class="card-body">
+                    <ul class="rating text-yellow fs-lg">
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                    </ul>
+                    <p class="fs-lg text-secondary my-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Alias
+                      quam
+                      ipsa
+                      dolorem et, consequatur ipsum</p>
+                    <p class="lh-1 fs-lg">Michael Doe</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="card bg-white">
+                  <div class="card-body">
+                    <ul class="rating text-yellow fs-lg">
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                      <li><i class="bi bi-star-fill"></i></li>
+                    </ul>
+                    <p class="fs-lg text-secondary my-4">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+                    <p class="lh-1 fs-lg">Michael Doe</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- product carousel -->
+    <section class="py-15 py-xl-20 overflow-hidden">
+      <div class="container">
+        <div class="row align-items-end mb-6">
+          <div class="col-lg-8">
+            <h2 class="fw-bold">Color options</h2>
+          </div>
+        </div>
+        <div class="carousel carousel-visible">
+          <div
+            data-carousel='{"nav": false,"mouseDrag": true, "gutter": 32, "loop": true, "responsive": {"0": {"items": 1}, "768": {"items": 2}, "992": {"items": 2}, "1200": {"items": 3}}}'>
+            {% for designColor in otherColors %}
+            <div>
+              <div class="product">
+                <figure class="product-image">
+                  <a href="#!">
+                    <img src="{% static 'assets/images/products/product-1.jpg' %}" alt="Image" />
+                    <img src="{% static 'assets/images/products/product-1-2.jpg' %}" alt="Image" />
+                  </a>
+                </figure>
+                <a class="product-title" href="#!">{{designColor.design.collection}} {{designColor.design.name}}</a>
+                <span class="product-price">{{designColor.color.primary_color}} / {{designColor.color.texture_color}}</span>
+              </div>            
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-15 py-xl-20 overflow-hidden">
+      <div class="container">
+        <div class="row align-items-end mb-6">
+          <div class="col-lg-8">
+            <h2 class="fw-bold">You might also like</h2>
+          </div>
+        </div>
+        <div class="carousel carousel-visible">
+          <div
+            data-carousel='{"nav": false,"mouseDrag": true, "gutter": 32, "loop": true, "responsive": {"0": {"items": 1}, "768": {"items": 2}, "992": {"items": 2}, "1200": {"items": 3}}}'>
+            {% for designColor in otherDesigns %}
+            <div>
+              <div class="product">
+                <figure class="product-image">
+                  <a href="#!">
+                    <img src="{% static 'assets/images/products/product-1.jpg '%}" alt="Image" />
+                    <img src="{% static 'assets/images/products/product-1-2.jpg '%}" alt="Image" />
+                  </a>
+                </figure>
+                <a class="product-title" href="#!">{{designColor.design.collection}} {{designColor.design.name}}</a>
+                <span class="product-price">{{designColor.color.primary_color}} / {{designColor.color.texture_color}}</span>
+              </div>            
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- footer -->
+    {% include "cube/components/footer.html" with theme=1 %}
+
+
+    {% include "cube/components/jsblock.html" %}
+  </body>
+
+{% endblock %}

@@ -1,0 +1,4 @@
+{% for size in sizes %}
+<li><a class="dropdown-item "
+    href="{% url 'size' size_id=size.id %}">{{size}}</a></li>
+{% endfor %}

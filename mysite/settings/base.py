@@ -32,8 +32,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # # Extra places for collectstatic to find static files.
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'static_in_env'),
+    os.path.join(BASE_DIR, 'frontend'),
 )
 
 ALLOWED_HOSTS = ['*']
@@ -67,6 +66,7 @@ INSTALLED_APPS = [
     'catalog',
     'rugviz',
     'shipment',
+    'accounts',
     'django_filters',
 ]
 
@@ -144,3 +144,5 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+LOGIN_REDIRECT_URL = 'list'

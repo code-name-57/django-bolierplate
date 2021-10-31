@@ -1,0 +1,18 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block title %}{% endblock %}
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- Libs CSS -->
+        <link rel="stylesheet" href="{% static './assets/css/libs.bundle.css' %}" />
+
+        <!-- Main CSS -->
+        <link rel="stylesheet" href="{% static './assets/css/index.bundle.css' %}" />
+
+    </head>
+        {% block content %} {% endblock %}
+
+
+</html>

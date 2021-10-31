@@ -1,0 +1,4 @@
+{% for collection in collections %}
+<li><a class="dropdown-item "
+    href="{% url 'collection' collection_id=collection.id %}">{{collection.name}}</a></li>
+{% endfor %}

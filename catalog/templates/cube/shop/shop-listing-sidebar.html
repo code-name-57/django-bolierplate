@@ -1,0 +1,268 @@
+{% extends 'cube/components/base.html' %}
+{% load static %}
+
+{% block title %}
+<title>AV Rugs : All Rugs</title>
+{% endblock %}
+
+{% block content %}
+<body>
+
+  {% include "cube/components/navbar.html" with theme=0 %}
+
+  
+  
+  {% include "cube/account/components/sidecart.html" %}
+
+
+
+  <div class="offcanvas-wrap">
+
+    <section class="py-15 py-xl-20">
+      <div class="container mt-5">
+        <div class="row g-3 g-md-5 align-items-end mb-5">
+          <div class="col-md-6">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href={% url 'list' %}>Home</a></li>
+                <li class="breadcrumb-item"><a href="#">Sizes</a></li>
+              </ol>
+              <h4 class="mb-2">{{size}}</h4>
+            </nav>
+          </div>
+          <div class="col-md-6 text-md-end">
+            <ul class="list-inline">
+              <li class="list-inline-item">
+                <div class="dropdown">
+                  <a class="underline text-black" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Price high to low <i class="bi bi-chevron-down"></i>
+                  </a>
+
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <li><a class="dropdown-item" href="#">Action</a></li>
+                    <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row justify-content-between">
+          {% include "cube/shop/components/sidebar2.html" %}
+          <!-- <div class="col-xl-3 d-none d-xl-block">
+            <div class="widget">
+              <form method="get">
+                <ul class="list-unstyled">
+                  {{ form.as_ul }}
+                </ul>
+               
+                <input class="btn" id="submit-filter" type="submit" />
+                <a class="btn" id="clear-filter" href="{% url 'list'%}">clear</a>
+              </form>
+            </div>
+            
+            <div class="widget">
+              <span class="d-flex eyebrow text-muted mb-2">Brands</span>
+              <ul class="list-unstyled">
+                <li>
+                  <div class="form-check form-check-minimal">
+                    <input class="form-check-input" type="checkbox" value="" id="brand-1" checked>
+                    <label class="form-check-label" for="brand-1">
+                      Vans
+                    </label>
+                  </div>
+                </li>
+                <li class="mt-1">
+                  <div class="form-check form-check-minimal">
+                    <input class="form-check-input" type="checkbox" value="" id="brand-2">
+                    <label class="form-check-label" for="brand-2">
+                      Carhart WIP
+                    </label>
+                  </div>
+                </li>
+                <li class="mt-1">
+                  <div class="form-check form-check-minimal">
+                    <input class="form-check-input" type="checkbox" value="" id="brand-3">
+                    <label class="form-check-label" for="brand-3">
+                      Carhart WIP
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+
+            <div class="widget mt-5">
+              <span class="d-flex eyebrow text-muted mb-2">Color</span>
+              <ul class="list-unstyled">
+                <li>
+                  <div class="form-check form-check-color">
+                    <input class="form-check-input" type="checkbox" value="" id="color-1">
+                    <label class="form-check-label" for="color-1">
+                      <span class="bg-red"></span> Red
+                    </label>
+                  </div>
+                </li>
+                <li class="mt-1">
+                  <div class="form-check form-check-color">
+                    <input class="form-check-input" type="checkbox" value="" id="color-2">
+                    <label class="form-check-label" for="color-2">
+                      <span class="bg-blue"></span> Blue
+                    </label>
+                  </div>
+                </li>
+                <li class="mt-1">
+                  <div class="form-check form-check-color">
+                    <input class="form-check-input" type="checkbox" value="" id="color-3">
+                    <label class="form-check-label" for="color-3">
+                      <span class="bg-green"></span> Green
+                    </label>
+                  </div>
+                </li>
+                <li class="mt-1">
+                  <div class="form-check form-check-color">
+                    <input class="form-check-input" type="checkbox" value="" id="color-4">
+                    <label class="form-check-label" for="color-4">
+                      <span class="bg-yellow"></span> Yellow
+                    </label>
+                  </div>
+                </li>
+              </ul>
+            </div>
+
+            <div class="widget mt-5">
+              <span class="d-flex eyebrow text-muted mb-2">Price</span>
+              <div class="range-slider" data-range='{"decimals": 0,"step": 1,"connect": true, "start" : [20,80], "range" : {"min": 0, "max" :
+                100}}'></div>
+              <div class="range-slider-selection">Price: <span class="range-slider-value" id="range-min"></span>
+                &mdash; <span class="range-slider-value" id="range-max"></span></div>
+            </div>
+          </div> -->
+          <div class="col-xl-9">
+            <div class="row g-3">
+              {% if page_obj %}
+              <div class="row mt-3">
+                {% for carpet in page_obj %}
+                  {% include "cube/shop/components/carpet-list-item.html" %}
+                {% endfor %}
+              </div>
+              {% else %}
+              <p>There are no carpets in the catalog.</p>
+              {% endif %}
+
+
+            </div>
+          </div>
+        </div>
+        {% include "cube/shop/components/paginator.html" %}
+      </div>
+    </section>
+
+    <!-- footer -->
+    {% include "cube/components/footer.html" with theme=0 %}
+
+  <div class="position-fixed bottom-0 end-0 p-2 level-1">
+    <button class="btn btn-white btn-icon d-lg-none rounded-pill shadow" type="button" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasFilter" aria-controls="offcanvasFilter">
+      <i class="bi bi-justify-right fs-4"></i>
+    </button>
+  </div>
+
+
+  <!-- offcanvas - filters -->
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasFilter" aria-labelledby="offcanvasFilterLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasFilterLabel">Filters</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+      <div class="widget">
+        <span class="d-flex eyebrow text-muted mb-2">Brands</span>
+        <ul class="list-unstyled">
+          <li>
+            <div class="form-check form-check-minimal">
+              <input class="form-check-input" type="checkbox" value="" id="brand-mob-1">
+              <label class="form-check-label" for="brand-mob-1">
+                Vans
+              </label>
+            </div>
+          </li>
+          <li class="mt-1">
+            <div class="form-check form-check-minimal">
+              <input class="form-check-input" type="checkbox" value="" id="brand-mob-2">
+              <label class="form-check-label" for="brand-mob-2">
+                Carhart WIP
+              </label>
+            </div>
+          </li>
+          <li class="mt-1">
+            <div class="form-check form-check-minimal">
+              <input class="form-check-input" type="checkbox" value="" id="brand-mob-3">
+              <label class="form-check-label" for="brand-mob-3">
+                Carhart WIP
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+
+      <div class="widget mt-5">
+        <span class="d-flex eyebrow text-muted mb-2">Color</span>
+        <ul class="list-unstyled">
+          <li>
+            <div class="form-check form-check-color">
+              <input class="form-check-input" type="checkbox" value="" id="color-mob-1">
+              <label class="form-check-label" for="color-mob-1">
+                <span class="bg-red"></span> Red
+              </label>
+            </div>
+          </li>
+          <li class="mt-1">
+            <div class="form-check form-check-color">
+              <input class="form-check-input" type="checkbox" value="" id="color-mob-2">
+              <label class="form-check-label" for="color-mob-2">
+                <span class="bg-blue"></span> Blue
+              </label>
+            </div>
+          </li>
+          <li class="mt-1">
+            <div class="form-check form-check-color">
+              <input class="form-check-input" type="checkbox" value="" id="color-mob-3">
+              <label class="form-check-label" for="color-mob-3">
+                <span class="bg-green"></span> Green
+              </label>
+            </div>
+          </li>
+          <li class="mt-1">
+            <div class="form-check form-check-color">
+              <input class="form-check-input" type="checkbox" value="" id="color-mob-4">
+              <label class="form-check-label" for="color-mob-4">
+                <span class="bg-yellow"></span> Yellow
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="widget mt-5">
+        <span class="d-flex eyebrow text-muted mb-2">Price</span>
+        <div class="range-slider" data-range='{"decimals": 0,"step": 1,"connect": true, "start" : [20,80], "range" : {"min": 0, "max" :
+            100}}'></div>
+        <div class="range-slider-selection">Price: <span class="range-slider-value range-min"></span>
+          &mdash; <span class="range-slider-value range-max"></span></div>
+      </div>
+
+    </div>
+  </div>
+
+
+  {% include "cube/components/jsblock.html" %}
+  </body>
+
+{% endblock %}
