@@ -10,7 +10,7 @@
 <body>
 
   <!-- navbar -->
-  {% include "cube/components/navbar-light.html" %}
+  {% include "cube/components/navbar.html" with theme=0%}
   
   
   {% include "cube/account/components/sidecart.html" %}
@@ -182,7 +182,7 @@
   </section>
 
   <!-- footer -->
-  {% include "cube/components/footer-dark.html" %}
+  {% include "cube/components/footer.html" with theme=1 %}
 
 
   {% include "cube/components/jsblock.html" %}

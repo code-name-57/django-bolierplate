@@ -8,7 +8,7 @@
 {% block content %}
 
 <body>
-{% include "cube/components/navbar-light.html" %}
+{% include "cube/components/navbar.html" with theme=0 %}
   
 
 
@@ -271,7 +271,7 @@
     </div>
 </section>
 
-{% include "cube/components/footer-light.html" %}
+{% include "cube/components/footer.html" with theme=0 %}
 </div>
 
 {% include "cube/components/jsblock.html" %}

@@ -8,7 +8,7 @@
 {% block content %}
 <body>
 
-  {% include "cube/components/navbar-light.html" %}
+  {% include "cube/components/navbar.html" with theme=0 %}
 
   
   
@@ -163,7 +163,7 @@
     </section>
 
     <!-- footer -->
-    {% include "cube/components/footer-light.html" %}
+    {% include "cube/components/footer.html" with theme=0 %}
 
   <div class="position-fixed bottom-0 end-0 p-2 level-1">
     <button class="btn btn-white btn-icon d-lg-none rounded-pill shadow" type="button" data-bs-toggle="offcanvas"
