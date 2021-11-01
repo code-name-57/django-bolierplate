@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     'shipment',
     'accounts',
     'django_filters',
+    'address',
+    'phonenumber_field',
 ]
 
 REST_FRAMEWORK = {
@@ -171,3 +173,5 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
+
+GOOGLE_API_KEY = 'AIzaSyD--your-google-maps-key-SjQBE'
