@@ -13,7 +13,7 @@ from rest_framework import routers
 
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import SignUpView
+from .views import SignUpView, register_singed_in_user
 
 
 urlpatterns = [
@@ -21,10 +21,11 @@ urlpatterns = [
     path('logout', auth_views.LogoutView.as_view(next_page='list'), name='logout'),
     
     path('forgot', auth_views.PasswordResetView.as_view(template_name='cube/account/password-reset/forgot-password.html', html_email_template_name='cube/account/password-reset/password-reset-email.html', subject_template_name='cube/account/password-reset/password-reset-subject.txt'), name='forgot'),
-    path('password_reset/done/$', auth_views.PasswordResetDoneView.as_view(template_name='cube/account/password-reset/forgot-password-done.html'), name='password_reset_done'),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(template_name='cube/account/password-reset/forgot-password-done.html'), name='password_reset_done'),
     path('reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(template_name='cube/account/password-reset/forgot-password-confirm.html'), name='password_reset_confirm'),
-    path('reset/done/$', auth_views.PasswordResetCompleteView.as_view(template_name='cube/account/password-reset/forgot-password-complete.html'), name='password_reset_complete'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='cube/account/password-reset/forgot-password-complete.html'), name='password_reset_complete'),
+    path('register_user', register_singed_in_user, name="register_signed_in_user"),
     # path('signup', SignUpView.as_view(), name='signup' ),
     
     path('register', SignUpView.as_view(), name='register'),
