@@ -107,3 +107,18 @@ def deduct_from_cart(request, carpet_id):
     # TODO: add same in basic cart page
     # TODO: activate remove link
     return add_to_cart(request, carpet_id, -1)
+
+def remove_from_cart(request, carpet_id):
+    try:
+        cart = Cart.objects.get(user = request.user)
+    except Cart.DoesNotExist:
+        cart = Cart(user=request.user)
+        cart.save()
+    carpet = Carpet.objects.get(id = carpet_id)
+
+    try:
+        cartItem = CartItem.objects.get(carpet = carpet, cart = cart)
+        cartItem.delete()
+    except CartItem.DoesNotExist:
+        cartItem = CartItem(carpet=carpet, cart = cart)
+    return redirect("carpets", carpet_id=carpet_id)

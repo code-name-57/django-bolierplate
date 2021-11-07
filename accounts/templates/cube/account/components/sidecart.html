@@ -6,7 +6,9 @@
       <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
+      {% if user.is_authenticated %}
       {% show_cart_items user %}
+      {% endif %}
     </div>
     <div class="offcanvas-footer">
       <div class="d-grid gap-1">
