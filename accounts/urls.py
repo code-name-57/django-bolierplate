@@ -13,7 +13,7 @@ from rest_framework import routers
 
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import SignUpView, register_as_consumer, register_as_retailer
+from .views import SignUpView, register_as_consumer, register_as_retailer, add_to_cart, deduct_from_cart
 
 
 urlpatterns = [
@@ -38,4 +38,7 @@ urlpatterns = [
     # path('forgot', TemplateView.as_view(template_name='cube/account/forgot-password.html'), name='forgot'),
     path('cart', TemplateView.as_view(template_name='cube/shop/shop-cart.html'), name='cart'),
     path('api-token-auth', obtain_auth_token, name='api_token_auth'),
+
+    path('add_to_cart/<int:carpet_id>', add_to_cart, name='add_to_cart'),
+    path('deduct_from_cart/<int:carpet_id>', deduct_from_cart, name='deduct_from_cart')
 ]

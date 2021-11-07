@@ -6,7 +6,9 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Retailer, Consumer
+
+from .models import Retailer, Consumer, Cart, CartItem
+from catalog.models import Carpet
 from .forms import RetailerRegistrationForm, ConsumerRegistrationForm, UserForm
 
 
@@ -82,3 +84,26 @@ def register_as_consumer(request):
     return render(request, register_user_uri,
                   dict(registration_form=registration_form,
                         user_form=user_form))
+
+def add_to_cart(request, carpet_id, quantity = 1):
+    try:
+        cart = Cart.objects.get(user = request.user)
+    except Cart.DoesNotExist:
+        cart = Cart(user=request.user)
+        cart.save()
+    carpet = Carpet.objects.get(id = carpet_id)
+
+    try:
+        cartItem = CartItem.objects.get(carpet = carpet, cart = cart)
+        qty = cartItem.quantity
+        cartItem.quantity = qty + quantity
+    except CartItem.DoesNotExist:
+        cartItem = CartItem(carpet=carpet, cart = cart)
+    cartItem.save()
+    return redirect("carpets", carpet_id=carpet_id)
+
+def deduct_from_cart(request, carpet_id):
+    # TODO: Number can be changed directly in the qty, handler that
+    # TODO: add same in basic cart page
+    # TODO: activate remove link
+    return add_to_cart(request, carpet_id, -1)
