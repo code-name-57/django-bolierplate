@@ -13,7 +13,7 @@ from rest_framework import routers
 
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import SignUpView, register_singed_in_user
+from .views import SignUpView, register_as_consumer, register_as_retailer
 
 
 urlpatterns = [
@@ -25,7 +25,9 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(template_name='cube/account/password-reset/forgot-password-confirm.html'), name='password_reset_confirm'),
     path('reset/done/', auth_views.PasswordResetCompleteView.as_view(template_name='cube/account/password-reset/forgot-password-complete.html'), name='password_reset_complete'),
-    path('register_user', register_singed_in_user, name="register_signed_in_user"),
+    path('register_retailer', register_as_retailer, name="register_retailer"),
+    path('register_consumer', register_as_consumer, name="register_consumer"),
+
     # path('signup', SignUpView.as_view(), name='signup' ),
     
     path('register', SignUpView.as_view(), name='register'),
