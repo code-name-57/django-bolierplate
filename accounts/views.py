@@ -100,7 +100,7 @@ def add_to_cart(request, carpet_id, quantity = 1):
     except CartItem.DoesNotExist:
         cartItem = CartItem(carpet=carpet, cart = cart)
     cartItem.save()
-    return redirect("carpets", carpet_id=carpet_id)
+    return redirect("cart")
 
 def deduct_from_cart(request, carpet_id):
     # TODO: Number can be changed directly in the qty, handler that
@@ -121,4 +121,4 @@ def remove_from_cart(request, carpet_id):
         cartItem.delete()
     except CartItem.DoesNotExist:
         cartItem = CartItem(carpet=carpet, cart = cart)
-    return redirect("carpets", carpet_id=carpet_id)
+    return redirect("cart")

@@ -36,7 +36,7 @@ urlpatterns = [
     path('settings', TemplateView.as_view(template_name='cube/account/account-settings.html'), name='settings'),
     path('account', TemplateView.as_view(template_name='cube/account/account.html'), name='account'),
     # path('forgot', TemplateView.as_view(template_name='cube/account/forgot-password.html'), name='forgot'),
-    path('cart', TemplateView.as_view(template_name='cube/shop/shop-cart.html'), name='cart'),
+    path('cart', TemplateView.as_view(template_name='cube/account/shop-cart.html'), name='cart'),
     path('api-token-auth', obtain_auth_token, name='api_token_auth'),
 
     path('add_to_cart/<int:carpet_id>', add_to_cart, name='add_to_cart'),

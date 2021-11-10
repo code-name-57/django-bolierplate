@@ -1,11 +1,23 @@
 {% load static %}
 <ul class="list-unstyled">
-    {% for cartItem in cartItems %}
 
+{% if not cartItems %}
+    No Items in cart!
+{% endif %}
+
+{% for cartItem in cartItems %}
 <li class="mt-4">
     <div class="row g-2 g-lg-3 align-items-center">
-      <a href="" class="col-3"><img class="img-fluid" src={%static "./assets/images/products/product-2.jpg" %}
-          alt="Product"></a>
+        {% if carpet.image_file %}
+          <a href="{% url 'carpets' carpet_id=cartItem.carpet.id %}" class="col-3 col-md-2"><img class="img-fluid" src={{cartItem.carpet.image_file.url}}
+            alt="Product"></a>
+        {% elif carpet.designColor.image_file %}
+          <a href= "{% url 'carpets' carpet_id=cartItem.carpet.id %}" class="col-3 col-md-2"><img class="img-fluid" src={{cartItem.carpet.designColor.image_file.url}}
+            alt="Product"></a>
+        {% else %}
+          <a href= "{% url 'carpets' carpet_id=cartItem.carpet.id %}"  class="col-3 col-md-2"><img class="img-fluid" src={% static "./assets/images/products/product-2.jpg" %}
+            alt="Product"></a>
+        {% endif %}
       <div class="col">
         <a href="" class="text-black text-primary-hover lead">{{cartItem}}</a>
         <ul class="list-inline text-muted">
