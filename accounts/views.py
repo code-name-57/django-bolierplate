@@ -85,7 +85,7 @@ def register_as_consumer(request):
                   dict(registration_form=registration_form,
                         user_form=user_form))
 
-def add_to_cart(request, carpet_id, quantity = 1):
+def add_to_cart(request, carpet_id, quantity = 1, redirect_to_cart=True):
     try:
         cart = Cart.objects.get(user = request.user)
     except Cart.DoesNotExist:
@@ -100,7 +100,10 @@ def add_to_cart(request, carpet_id, quantity = 1):
     except CartItem.DoesNotExist:
         cartItem = CartItem(carpet=carpet, cart = cart)
     cartItem.save()
-    return redirect("cart")
+    if redirect_to_cart:
+        return redirect("cart")
+    else:
+        return redirect("carpets", carpet_id=carpet.id)
 
 def deduct_from_cart(request, carpet_id):
     # TODO: Number can be changed directly in the qty, handler that

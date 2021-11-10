@@ -39,6 +39,7 @@ urlpatterns = [
     path('cart', TemplateView.as_view(template_name='cube/account/shop-cart.html'), name='cart'),
     path('api-token-auth', obtain_auth_token, name='api_token_auth'),
 
+    path('add_to_cart/<int:carpet_id>/<int:redirect_to_cart>', add_to_cart, name='add_to_cart'),
     path('add_to_cart/<int:carpet_id>', add_to_cart, name='add_to_cart'),
     path('deduct_from_cart/<int:carpet_id>', deduct_from_cart, name='deduct_from_cart'),
     path('remove_from_cart/<int:carpet_id>', remove_from_cart, name='remove_from_cart'),
