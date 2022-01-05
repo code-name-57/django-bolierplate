@@ -9,8 +9,8 @@
 
 <body>
 
-  <!-- navbar -->
-  {% include "cube/shop/components/navbar-light.html" %}
+  {% include "cube/components/navbar.html" with theme=0 %}
+
   
   
   {% include "cube/account/components/sidecart.html" %}
@@ -23,6 +23,21 @@
           <div class="col-xl-7 mb-5 mb-xl-0">
             <section class="mt-4">
               <h2 class="fw-bold">Address</h2>
+              {% if address_form.errors %}
+                <span> There are errors in the form bro!</span>
+                {{address_form.errors}}
+              {% endif %}
+
+              {% if checkout_form.errors %}
+                <span> There are errors in the form bro!</span>
+                {{checkout_form.errors}}
+              {% endif %}
+              <form method="POST">
+                {% csrf_token %}
+                {{ address_form.as_p }}
+                {{ checkout_form.as_p }}
+                <button type="submit" class="btn btn-lg btn-primary">Register Account</button>
+              </form>
               <form class="row g-2">
                 <div class="col-12">
                   <label for="inputCountry" class="form-label">Country</label>

@@ -1,0 +1,39 @@
+{% load static %}
+<ul class="list-unstyled">
+
+{% if not cartItems %}
+    No Items in cart!
+{% endif %}
+
+{% for cartItem in cartItems %}
+<li class="mt-4">
+    <div class="row g-2 g-lg-3 align-items-center">
+        {% if carpet.image_file %}
+          <a href="{% url 'carpets' carpet_id=cartItem.carpet.id %}" class="col-3 col-md-2"><img class="img-fluid" src={{cartItem.carpet.image_file.url}}
+            alt="Product"></a>
+        {% elif carpet.designColor.image_file %}
+          <a href= "{% url 'carpets' carpet_id=cartItem.carpet.id %}" class="col-3 col-md-2"><img class="img-fluid" src={{cartItem.carpet.designColor.image_file.url}}
+            alt="Product"></a>
+        {% else %}
+          <a href= "{% url 'carpets' carpet_id=cartItem.carpet.id %}"  class="col-3 col-md-2"><img class="img-fluid" src={% static "./assets/images/products/product-2.jpg" %}
+            alt="Product"></a>
+        {% endif %}
+      <div class="col">
+        <a href="" class="text-black text-primary-hover lead">{{cartItem.carpet.designColor.design.collection}} {{cartItem.carpet.designColor.design}}</a>
+        <ul class="list-inline text-muted">
+          <li class="list-inline-item">Price: <span class="text-secondary">{{cartItem.unit_price}}</span></li>
+          <li class="list-inline-item">Color: <span class="text-secondary">{{cartItem.carpet.designColor.color}}</span></li>
+          <li class="list-inline-item">Qty:
+            <div class="counter text-secondary" data-counter="qty-1">
+              <a class="counter-minus bi bi-dash" href="{% url 'deduct_from_cart' carpet_id=cartItem.carpet.id %}" ></a>
+              <input type="number" name="qty-1" class="counter-value" value={{cartItem.quantity}} min="0" max="10">
+              <a  class="counter-plus bi bi-plus" href="{% url 'add_to_cart' carpet_id=cartItem.carpet.id %}" ></a>
+            </div>
+          </li>
+        </ul>
+        <a href="{% url 'remove_from_cart' carpet_id=cartItem.carpet.id %}" class="text-red underline">Remove</a>
+      </div>
+    </div>
+  </li>
+{% endfor %}
+</ul>

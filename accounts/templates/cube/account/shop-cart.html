@@ -1,6 +1,6 @@
 {% extends 'cube/components/base.html' %}
 {% load static %}
-
+{% load show_cart_items %}
 {% block title %}
 <title>AV Rugs : All Rugs</title>
 {% endblock %}
@@ -11,8 +11,6 @@
 
   <!-- navbar -->
   {% include "cube/components/navbar.html" with theme=0%}
-  
-  
   {% include "cube/account/components/sidecart.html" %}
 
 
@@ -22,72 +20,9 @@
       <div class="row justify-content-between">
         <div class="col-lg-7 mb-5 mb-lg-0">
           <h1 class="fs-2 my-4">Shopping Cart</h1>
-          <ul class="list-unstyled">
-            <li>
-              <div class="row g-2 g-lg-3 align-items-center">
-                <a href="" class="col-3 col-md-2"><img class="img-fluid" src={% static "./assets/images/products/product-1.jpg" %}
-                    alt="Product"></a>
-                <div class="col">
-                  <a href="" class="text-black text-hover-primary lead">Bluetooth Speaker</a>
-                  <ul class="list-inline text-muted">
-                    <li class="list-inline-item">Price: <span class="text-secondary">$90</span></li>
-                    <li class="list-inline-item">Color: <span class="text-secondary">Blue</span></li>
-                    <li class="list-inline-item">Qty:
-                      <div class="counter text-secondary" data-counter="qty-1">
-                        <span class="counter-minus bi bi-dash"></span>
-                        <input type="number" name="qty-1" class="counter-value" value="0" min="0" max="10">
-                        <span class="counter-plus bi bi-plus"></span>
-                      </div>
-                    </li>
-                  </ul>
-                  <a href="" class="text-red underline">Remove</a>
-                </div>
-              </div>
-            </li>
-            <li class="mt-4">
-              <div class="row g-2 g-lg-3 align-items-center">
-                <a href="" class="col-3 col-md-2"><img class="img-fluid" src={% static "./assets/images/products/product-2.jpg" %}
-                    alt="Product"></a>
-                <div class="col">
-                  <a href="" class="text-black text-hover-primary lead">Bluetooth Speaker</a>
-                  <ul class="list-inline text-muted">
-                    <li class="list-inline-item">Price: <span class="text-secondary">$90</span></li>
-                    <li class="list-inline-item">Color: <span class="text-secondary">Blue</span></li>
-                    <li class="list-inline-item">Qty:
-                      <div class="counter text-secondary" data-counter="qty-1">
-                        <span class="counter-minus bi bi-dash"></span>
-                        <input type="number" name="qty-1" class="counter-value" value="0" min="0" max="10">
-                        <span class="counter-plus bi bi-plus"></span>
-                      </div>
-                    </li>
-                  </ul>
-                  <a href="" class="text-red underline">Remove</a>
-                </div>
-              </div>
-            </li>
-            <li class="mt-4">
-              <div class="row g-2 g-lg-3 align-items-center">
-                <a href="" class="col-3 col-md-2"><img class="img-fluid" src={% static "./assets/images/products/product-3.jpg" %}
-                    alt="Product"></a>
-                <div class="col">
-                  <a href="" class="text-black text-hover-primary lead">Bluetooth Speaker</a>
-                  <ul class="list-inline text-muted">
-                    <li class="list-inline-item">Price: <span class="text-secondary">$90</span></li>
-                    <li class="list-inline-item">Color: <span class="text-secondary">Blue</span></li>
-                    <li class="list-inline-item">Qty:
-                      <div class="counter text-secondary" data-counter="qty-1">
-                        <span class="counter-minus bi bi-dash"></span>
-                        <input type="number" name="qty-1" class="counter-value" value="0" min="0" max="10">
-                        <span class="counter-plus bi bi-plus"></span>
-                      </div>
-                    </li>
-                  </ul>
-                  <a href="" class="text-red underline">Remove</a>
-                </div>
-              </div>
-            </li>
-          </ul>
-
+          {% if user.is_authenticated %}
+          {% show_cart_items user %}
+          {% endif %}
           <a href="" class="underline mt-5">Back to shopping</a>
         </div>
         <div class="col-lg-5 ps-xl-10">
@@ -169,7 +104,7 @@
             </div>
             <div class="card-footer">
               <div class="d-grid text-center">
-                <a href="" class="btn btn-lg btn-primary rounded-pill">Proceed to Checkout</a>
+                <a href="{% url 'checkout' %}" class="btn btn-lg btn-primary rounded-pill">Proceed to Checkout</a>
                 <span class="d-flex justify-content-center align-items-center text-muted mt-2"><i
                     class="bi bi-shield-lock fs-6 me-1"></i>
                   Secure Transaction</span>
