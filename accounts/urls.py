@@ -13,7 +13,7 @@ from rest_framework import routers
 
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import SignUpView, checkout, register_as_consumer, register_as_retailer, add_to_cart, deduct_from_cart, remove_from_cart
+from .views import OrderHistory, SignUpView, checkout, register_as_consumer, register_as_retailer, add_to_cart, deduct_from_cart, remove_from_cart
 
 
 urlpatterns = [
@@ -32,7 +32,7 @@ urlpatterns = [
     
     path('register', SignUpView.as_view(), name='register'),
     path('billing', TemplateView.as_view(template_name='cube/account/account-billing.html'), name='billing'),
-    path('orders', TemplateView.as_view(template_name='cube/account/account-orders.html'), name='orders'),
+    path('orders', OrderHistory, name='orders'),
     path('settings', TemplateView.as_view(template_name='cube/account/account-settings.html'), name='settings'),
     path('account', TemplateView.as_view(template_name='cube/account/account.html'), name='account'),
     # path('forgot', TemplateView.as_view(template_name='cube/account/forgot-password.html'), name='forgot'),

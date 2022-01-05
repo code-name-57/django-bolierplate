@@ -93,30 +93,56 @@
                   <div class="card bg-opaque-white">
                     <div class="card-body bg-white">
                       <div class="accordion" id="accordion-1">
+                        {% for order in orders %}
                         <div class="accordion-item">
                           <div class="accordion-header" id="heading-1-1">
                             <div class="accordion-button collapsed" role="button" data-bs-toggle="collapse"
-                              data-bs-target="#collapse-1-1" aria-expanded="false" aria-controls="collapse-1-1">
+                              data-bs-target="#collapse-{{order.id}}" aria-expanded="false" aria-controls="collapse-{{order.id}}">
                               <div class="row g-1 g-xl-5 align-items-center">
-                                <div class="col-6 col-md-3">Order 45182</div>
-                                <div class="col-6 col-md-3 text-secondary">10 Aug, 2021</div>
-                                <div class="col-6 col-md-3 text-secondary">$450.25</div>
-                                <div class="col-6 col-md-3"><span class="badge bg-primary rounded-pill">On the
-                                    way</span>
+                                <div class="col-6 col-md-3">Order #{{order.id}}</div>
+                                <div class="col-6 col-md-3 text-secondary">{{order.created_at}}</div>
+                                <div class="col-6 col-md-3 text-secondary">${{order.total}}</div>
+                                <div class="col-6 col-md-3"><span class="badge bg-primary rounded-pill">{{order.status}}</span>
                                 </div>
                               </div>
                             </div>
                           </div>
-                          <div id="collapse-1-1" class="accordion-collapse collapse" aria-labelledby="heading-1-1"
+                          <div id="collapse-{{order.id}}" class="accordion-collapse collapse" aria-labelledby="heading-{{order.id}}"
                             data-bs-parent="#accordion-1">
                             <div class="accordion-body">
-                              <p class="text-secondary">Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore
-                                perspiciatis nisi
-                                voluptatem. Perspiciatis iure expedita voluptas, dolorem nisi repudiandae amet
-                                recusandae quidem explicabo nihil, impedit ab iusto laudantium tempora architecto.</p>
+                              <ul class="list-unstyled">
+                              {% for cartItem in order.orderitem_set.all %}
+                              <li class="mt-4 ">
+                                <div class="row g-2 g-lg-3 align-items-center">
+                                    {% if carpet.image_file %}
+                                      <a href="{% url 'carpets' carpet_id=cartItem.carpet.id %}" class="col-3 col-md-2"><img class="img-fluid" src={{cartItem.carpet.image_file.url}}
+                                        alt="Product"></a>
+                                    {% elif carpet.designColor.image_file %}
+                                      <a href= "{% url 'carpets' carpet_id=cartItem.carpet.id %}" class="col-3 col-md-2"><img class="img-fluid" src={{cartItem.carpet.designColor.image_file.url}}
+                                        alt="Product"></a>
+                                    {% else %}
+                                      <a href= "{% url 'carpets' carpet_id=cartItem.carpet.id %}"  class="col-3 col-md-2"><img class="img-fluid" src={% static "./assets/images/products/product-2.jpg" %}
+                                        alt="Product"></a>
+                                    {% endif %}
+                                  <div class="col">
+                                    <a href="" class="text-black text-primary-hover lead">{{cartItem}}</a>
+                                    <ul class="list-inline text-muted">
+                                      <li class="list-inline-item">Price: <span class="text-secondary">{{cartItem.unit_price}}</span></li>
+                                      <li class="list-inline-item">Color: <span class="text-secondary">Blue</span></li>
+                                      <li class="list-inline-item">Qty: {{cartItem.quantity}}</li>
+                                    </ul>
+                                    
+                                  </div>
+                                </div>
+                              </li>
+                              {% endfor %}
+                            </ul>
                             </div>
                           </div>
                         </div>
+                        {% endfor %}
+
+
                         <div class="accordion-item">
                           <div class="accordion-header" id="heading-1-2">
                             <div class="accordion-button collapsed" role="button" data-bs-toggle="collapse"
@@ -146,35 +172,7 @@
                             </div>
                           </div>
                         </div>
-                        <div class="accordion-item">
-                          <div class="accordion-header" id="heading-1-3">
-                            <div class="accordion-button collapsed" role="button" data-bs-toggle="collapse"
-                              data-bs-target="#collapse-1-3" aria-expanded="false" aria-controls="collapse-1-3">
-                              <div class="row g-1 g-xl-5 align-items-center">
-                                <div class="col-6 col-md-3">Order 45182</div>
-                                <div class="col-6 col-md-3 text-secondary">10 Aug, 2021</div>
-                                <div class="col-6 col-md-3 text-secondary">$450.25</div>
-                                <div class="col-6 col-md-3"><span class="badge bg-primary rounded-pill">On the
-                                    way</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div id="collapse-1-3" class="accordion-collapse collapse" aria-labelledby="heading-1-3"
-                            data-bs-parent="#accordion-1">
-                            <div class="accordion-body">
-                              <p class="text-secondary">Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-                                Blanditiis
-                                asperiores sed
-                                consectetur
-                                placeat ut vitae ad sequi laudantium explicabo cupiditate non, deserunt quas
-                                sapiente
-                                fuga
-                                fugiat a
-                                ipsam adipisci odit.</p>
-                            </div>
-                          </div>
-                        </div>
+                        
                       </div>
                     </div>
                   </div>

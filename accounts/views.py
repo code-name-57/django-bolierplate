@@ -149,3 +149,11 @@ def checkout(request):
                 orderItem = OrderItem(order = order, quantity = item.quantity, unit_price = item.unit_price, carpet_id = item.carpet_id)
                 orderItem.save()
     return render(request, "cube/shop/shop-checkout.html", context)
+
+def OrderHistory(request):
+    user = request.user
+    if not user.is_authenticated:
+        return redirect('login')
+    orders = user.order_set.all()
+    context = {'orders' : orders}
+    return render(request, "cube/account/account-orders.html", context)

@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from address.models import AddressField
+from django.db.models.enums import Choices
 from django.forms.models import ModelForm
 from catalog.models import Carpet
 from phonenumber_field.modelfields import PhoneNumberField
@@ -46,9 +47,22 @@ class CartItem(models.Model):
     carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
 
 class Order(models.Model):
+    # TODO Use abbrev for choices. get_status_display() not working currently.
+    STATUS_CHOICES = (
+    ('RECIEVED', 'RECIEVED'),
+    ('QUOTATION SENT', 'QUOTATION SENT'),
+    ('PAID', 'PAID'),
+    ('SHIPPED', 'SHIPPED'),
+    ('DELIVERED', 'DELIVERED'),
+    )
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     card_number = models.CharField(max_length=15, blank=True)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    status = models.CharField(max_length = 20, choices = STATUS_CHOICES, default = 'RECIEVED')
+    total = models.IntegerField(default = 20)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
