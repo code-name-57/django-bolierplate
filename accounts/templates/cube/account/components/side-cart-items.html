@@ -19,10 +19,10 @@
             alt="Product"></a>
         {% endif %}
       <div class="col">
-        <a href="" class="text-black text-primary-hover lead">{{cartItem}}</a>
+        <a href="" class="text-black text-primary-hover lead">{{cartItem.carpet.designColor.design.collection}} {{cartItem.carpet.designColor.design}}</a>
         <ul class="list-inline text-muted">
           <li class="list-inline-item">Price: <span class="text-secondary">{{cartItem.unit_price}}</span></li>
-          <li class="list-inline-item">Color: <span class="text-secondary">Blue</span></li>
+          <li class="list-inline-item">Color: <span class="text-secondary">{{cartItem.carpet.designColor.color}}</span></li>
           <li class="list-inline-item">Qty:
             <div class="counter text-secondary" data-counter="qty-1">
               <a class="counter-minus bi bi-dash" href="{% url 'deduct_from_cart' carpet_id=cartItem.carpet.id %}" ></a>
