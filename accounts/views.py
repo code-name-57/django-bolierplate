@@ -7,9 +7,9 @@ from django.views import generic
 from django.contrib.auth.models import User
 from django.contrib import messages
 
-from .models import Retailer, Consumer, Cart, CartItem
+from .models import Address, Order, OrderItem, Retailer, Consumer, Cart, CartItem
 from catalog.models import Carpet
-from .forms import RetailerRegistrationForm, ConsumerRegistrationForm, UserForm
+from .forms import RetailerRegistrationForm, ConsumerRegistrationForm, UserForm, CheckoutForm, AddressForm
 
 
 class SignUpView(generic.CreateView):
@@ -86,6 +86,8 @@ def register_as_consumer(request):
                         user_form=user_form))
 
 def add_to_cart(request, carpet_id, quantity = 1, redirect_to_cart=True):
+    if not request.user.is_authenticated:
+        return redirect('login')
     try:
         cart = Cart.objects.get(user = request.user)
     except Cart.DoesNotExist:
@@ -125,3 +127,25 @@ def remove_from_cart(request, carpet_id):
     except CartItem.DoesNotExist:
         cartItem = CartItem(carpet=carpet, cart = cart)
     return redirect("cart")
+
+def checkout(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    checkout_form = CheckoutForm()
+    address_form = AddressForm()
+    context = {'checkout_form' : checkout_form, 'address_form': address_form }
+    user = request.user
+    if request.method == "POST":
+        form_data_list = [request.POST] if request.POST else list()
+        address_form = AddressForm(*form_data_list) # user__address
+        checkout_form = CheckoutForm(*form_data_list)
+        if address_form.is_valid() and checkout_form.is_valid():
+            address = address_form.save()
+            order = checkout_form.save(commit = False)
+            order.user = user
+            order.address = address
+            order.save()
+            for item in user.cart.cartitem_set.all():
+                orderItem = OrderItem(order = order, quantity = item.quantity, unit_price = item.unit_price, carpet_id = item.carpet_id)
+                orderItem.save()
+    return render(request, "cube/shop/shop-checkout.html", context)

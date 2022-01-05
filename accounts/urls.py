@@ -13,7 +13,7 @@ from rest_framework import routers
 
 from rest_framework.authtoken.views import obtain_auth_token
 
-from .views import SignUpView, register_as_consumer, register_as_retailer, add_to_cart, deduct_from_cart, remove_from_cart
+from .views import SignUpView, checkout, register_as_consumer, register_as_retailer, add_to_cart, deduct_from_cart, remove_from_cart
 
 
 urlpatterns = [
@@ -43,4 +43,5 @@ urlpatterns = [
     path('add_to_cart/<int:carpet_id>', add_to_cart, name='add_to_cart'),
     path('deduct_from_cart/<int:carpet_id>', deduct_from_cart, name='deduct_from_cart'),
     path('remove_from_cart/<int:carpet_id>', remove_from_cart, name='remove_from_cart'),
+    path('checkout', checkout, name='checkout'),
 ]

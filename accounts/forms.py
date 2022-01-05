@@ -1,7 +1,8 @@
+from django.db.models import fields
 from django.forms import ModelForm, \
         TextInput, \
         Textarea
-from .models import Retailer, Consumer
+from .models import Address, Retailer, Consumer, Order
 from django.contrib.auth.models import User
 from address.forms import AddressField
 
@@ -22,3 +23,14 @@ class UserForm(ModelForm):
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
+
+class AddressForm(ModelForm):
+    class Meta:
+        model = Address
+        fields = '__all__'
+
+class CheckoutForm(ModelForm):
+    # address = AddressField()
+    class Meta:
+        model = Order
+        fields = ('card_number',)
