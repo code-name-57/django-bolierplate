@@ -10,7 +10,7 @@ from django.contrib import messages
 
 from django.utils.safestring import mark_safe
 
-from .utils.image_importer import import_new_images
+from .utils.image_importer import ImageImporter
 
 from django.contrib.admin.widgets import AdminFileWidget
 
@@ -82,7 +82,7 @@ class CollectionAdmin(admin.ModelAdmin):
 
     @admin.action(description='Import New Images Folder')
     def import_images(self, request, queryset):
-        import_new_images(request, queryset, self)
+        img_imp = ImageImporter(request, queryset, self)
 
 
 
