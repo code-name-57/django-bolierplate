@@ -1,12 +1,16 @@
 from django.contrib import admin
+from django.db.models.query import QuerySet
 
 # Register your models here.
 from .models import *
 from import_export import resources
 from import_export.fields import Field
 from import_export.admin import ImportExportModelAdmin
+from django.contrib import messages
 
 from django.utils.safestring import mark_safe
+
+from .utils.image_importer import import_new_images
 
 from django.contrib.admin.widgets import AdminFileWidget
 
@@ -73,6 +77,14 @@ class CollectionAdmin(admin.ModelAdmin):
     list_filter = ['brand']
     filter_horizontal = ('available_sizes',)
     search_fields = ['name']
+
+    actions = ['import_images']
+
+    @admin.action(description='Import New Images Folder')
+    def import_images(self, request, queryset):
+        import_new_images(request, queryset, self)
+
+
 
 class BrandAdmin(admin.ModelAdmin):
     inlines = [CollectionTabularInline]
