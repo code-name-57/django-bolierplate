@@ -1,14 +1,13 @@
 
-from django.contrib import admin
-from django.db.models.query import QuerySet
+
 from django.conf import settings
 import os
 # Register your models here.
-# from models import *
-from import_export import resources
-from import_export.fields import Field
-from import_export.admin import ImportExportModelAdmin
+from catalog.models import *
+from parse import *
 from django.contrib import messages
+from collections import OrderedDict
+
 
 class ImageImporter:
     def __init__(self, request, queryset, model_admin):
@@ -40,39 +39,55 @@ class ImageImporter:
 
     def handle_file(self, file_path, file_name):
         # retrieve collection, design, color, size by parsing file name
-        collection, design, color, size = self.parse_filename(file_name)
-        
+        model_field_values = self.parse_filename(file_name)
+        print(model_field_values, file_name)
+        # (**model_field_values)
+        breakpoint()
+        qs = DesignInColor.objects.filter(design__name=model_field_values['design'], color__primary_color=model_field_values['color__primary_color'], color__texture_color=model_field_values['color__texture_color'])
+        print("qs  : " + str(qs))
+        # breakpoint()
         # if file name does not contain all details, then look for it in self.stack which is path of file from root directory
-        if collection is None:
-            collection = self.search_collection()
-        if design is None:
-            design = self.search_design()
-        if color is None:
-            color = self.search_color()
-        if size is None:
-            size = self.search_size()
+        # if collection is None:
+        #     collection = self.search_collection()
+        # if design is None:
+        #     design = self.search_design()
+        # if color is None:
+        #     color = self.search_color()
+        # if size is None:
+        #     size = self.search_size()
         
-        if size is None:
-            # No size found in filename of directories, so try adding image to DesignColor model
-            self.add_design_color_image(file_path, collection, design, color)
-        else:
-            # There is size either in filename or dorectory, so try adding image Carpet model
-            self.add_carpet_image(file_path, collection, design, color, size)
+        # if size is None:
+        #     # No size found in filename of directories, so try adding image to DesignColor model
+        #     self.add_design_color_image(file_path, collection, design, color)
+        # else:
+        #     # There is size either in filename or dorectory, so try adding image Carpet model
+        #     self.add_carpet_image(file_path, collection, design, color, size)
 
         self.model_admin.message_user(self.request, " file :" + file_path, messages.SUCCESS)
 
 
-    def parse_filename(Self, file_name):
-        # TODO use regex to retrieve collection, design number, color, and/or size
+    def parse_filename(self, file_name):
         # Alvita 2120 Blue Cream 7x9.jpg (@ /new_images/)
-        # Alvita 2120 Blue Cream.jpg (@ /new_images/)
-        # 2120 Blue Cream.jpg (@ /new_images/alvita/)
         # Blue Cream.jpg (@ /new_images/alvita/2120/)
-        collection = None
-        design = None
-        color = None
-        size = None
-        return collection, design, color, size
+        file_name = " ".join(file_name.split())
+        output = dict()
+        list_parse = OrderedDict()
+        list_parse["{:d} {:w} {:w}.{:w}"] = \
+            ['design__name', 'color__primary_color', 'color__texture_color'] # 2120 Blue Cream.jpg (@ /new_images/alvita/)
+        list_parse["{:d}{:w} {:w} {:w}.{:w}"] = \
+            ["design__name", "variation", "color__primary_color", "color__texture_color"]   # 2120A Blue Cream.jpg (@ /new_images/alvita/)
+        list_parse["{:w} {:d} {:w} {:w}.{:w}"] = \
+            ['collection', 'design__name', 'color__primary_color', 'color__texture_color'] # Alvita 2120 Blue Cream.jpg (@ /new_images/)
+        list_parse["{:w} {:d}{:w} {:w} {:w}.{:w}"] = \
+            ["collection", "design__name", "variation", "color__primary_color", "color__texture_color"] # Alvita 2120B Blue Cream.jpg (@ /new_images/)
+
+        for key, value in list_parse.items():
+            prs = parse(key, file_name, case_sensitive=False)
+            if prs:
+                for i, x in enumerate(value):
+                    output[x] = prs[i]
+                break
+        return output
         
     def search_collection(self):
         # TODO search collection name in stack
