@@ -7,7 +7,7 @@ from catalog.models import *
 from parse import *
 from django.contrib import messages
 from collections import OrderedDict
-
+from django.core.files import File
 
 class ImageImporter:
     def __init__(self, request, queryset, model_admin):
@@ -37,18 +37,41 @@ class ImageImporter:
             else:
                 self.handle_file(new_path, file)
 
+    def save_image_in_model(self, model_obj, file_path):
+        breakpoint()
+        if model_obj.image_file:
+            self.model_admin.message_user(self.request, "Image already exists for ")
+            f = open(file_path, 'r')
+            model_obj.image_file = File(f)
+            model_obj.save()
+        else:
+            f = open(file_path, 'r')
+            model_obj.image_file = File(f)
+            model_obj.save()
+            # delete image from current path
+            # paste image in catalog
+            # save catalog path as model_obj.image_path
+            # model_
+        pass
+
     def handle_file(self, file_path, file_name):
         # retrieve collection, design, color, size by parsing file name
         model_field_values = self.parse_filename(file_name)
         print(model_field_values, file_name)
         # (**model_field_values)
-        breakpoint()
-        qs = DesignInColor.objects.filter(design__name=model_field_values['design'], color__primary_color=model_field_values['color__primary_color'], color__texture_color=model_field_values['color__texture_color'])
-        print("qs  : " + str(qs))
+        try:
+            qs = DesignInColor.objects.filter(design__name__startswith=model_field_values['design__name'], color__primary_color=model_field_values['color__primary_color'], color__texture_color=model_field_values['color__texture_color'])
+            if qs.count()>0:
+                self.model_admin.message_user(self.request, " file :" + file_path + "model : " + str(qs[0]), messages.SUCCESS)
+                self.save_image_in_model(qs[0], file_path)
+        except KeyError as e:
+            self.model_admin.message_user(self.request, "error file name: " + file_name, messages.ERROR)
+        #    / pass
+        # qs = DesignInColor.objects.filter(**model_field_values)
         # breakpoint()
         # if file name does not contain all details, then look for it in self.stack which is path of file from root directory
-        # if collection is None:
-        #     collection = self.search_collection()
+        # if model_field_values['design__collection__name'] is None:
+        #     model_field_values['design__collection__name'] = self.search_collection()
         # if design is None:
         #     design = self.search_design()
         # if color is None:
@@ -63,7 +86,7 @@ class ImageImporter:
         #     # There is size either in filename or dorectory, so try adding image Carpet model
         #     self.add_carpet_image(file_path, collection, design, color, size)
 
-        self.model_admin.message_user(self.request, " file :" + file_path, messages.SUCCESS)
+        # self.model_admin.message_user(self.request, " file :" + file_path, messages.SUCCESS)
 
 
     def parse_filename(self, file_name):
