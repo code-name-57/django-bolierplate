@@ -22,6 +22,7 @@ SECRET_KEY = 'django-insecure-s7uftu0#o+x7f_ane(1(o=r1xx7nr=-yu%0yl-!gp%$!l0v0oz
 DEBUG = True
 
 # Media files (user uploads, images, videos etx)
+# TODO: It should be just media not media/, messes up path b/w windows and unix.
 MEDIA_ROOT= os.path.join(BASE_DIR, 'media/')
 MEDIA_URL= "/media/"
 

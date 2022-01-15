@@ -8,6 +8,7 @@ from parse import *
 from django.contrib import messages
 from collections import OrderedDict
 from django.core.files import File
+from pathlib import Path
 
 class ImageImporter:
     def __init__(self, request, queryset, model_admin):
@@ -38,32 +39,42 @@ class ImageImporter:
                 self.handle_file(new_path, file)
 
     def save_image_in_model(self, model_obj, file_path):
-        breakpoint()
         if model_obj.image_file:
-            self.model_admin.message_user(self.request, "Image already exists for ")
-            f = open(file_path, 'r')
-            model_obj.image_file = File(f)
-            model_obj.save()
+            # TODO: should we delete the file here?
+            self.model_admin.message_user(self.request, "Image already exists for :" + file_path + ". File not deleted.", messages.WARNING)
+            # os.remove(file_path)
         else:
-            f = open(file_path, 'r')
-            model_obj.image_file = File(f)
+            file_path = Path(file_path)
+            f = open(file_path, 'rb')
+            model_obj.image_file.save(os.path.basename(file_path), File(f))
             model_obj.save()
-            # delete image from current path
-            # paste image in catalog
-            # save catalog path as model_obj.image_path
-            # model_
-        pass
+            os.remove(file_path)
+            self.model_admin.message_user(self.request, "Image added for :" + file_path + ". Deleteing this file.", messages.SUCCESS)
 
     def handle_file(self, file_path, file_name):
         # retrieve collection, design, color, size by parsing file name
         model_field_values = self.parse_filename(file_name)
-        print(model_field_values, file_name)
-        # (**model_field_values)
         try:
+            model_field_values['design__name'] = str(model_field_values['design__name'])
             qs = DesignInColor.objects.filter(design__name__startswith=model_field_values['design__name'], color__primary_color=model_field_values['color__primary_color'], color__texture_color=model_field_values['color__texture_color'])
             if qs.count()>0:
-                self.model_admin.message_user(self.request, " file :" + file_path + "model : " + str(qs[0]), messages.SUCCESS)
                 self.save_image_in_model(qs[0], file_path)
+            else:
+                # found design in color in carpet image that is not in the model.
+                # create new object then save the image there.
+                image_collection_name = self.search_collection()
+                image_design_name = model_field_values['design__name']
+                # TODO: I think that the design variation logic should be created in the design model
+                # for now in this else all designs are unique with no variation.
+                image_collection_obj, _ = Collection.objects.get_or_create(name=image_collection_name)
+                design_obj, _ = Design.objects.get_or_create(name=image_design_name,
+                                                             collection=image_collection_obj)
+                color_obj, _  = Color.objects.get_or_create(primary_color=model_field_values["color__primary_color"],
+                                                            texture_color=model_field_values["color__texture_color"])
+                design_in_color_obj = DesignInColor.objects.create(design=design_obj,
+                                                                   color=color_obj)
+                self.save_image_in_model(design_in_color_obj, file_path)
+
         except KeyError as e:
             self.model_admin.message_user(self.request, "error file name: " + file_name, messages.ERROR)
         #    / pass
@@ -114,7 +125,11 @@ class ImageImporter:
         
     def search_collection(self):
         # TODO search collection name in stack
-        return None
+        # NOTE: I think that storing stack is a bit confusing.
+        # IMHO it would be better if we just passed the complete file path here and have the seach as a static function.
+        # the same stack can be easily create by spliting the file path.
+        # for mocking purpose I am return "Alvita"
+        return "ALVITA"
 
     def search_color(self):
         # TODO search color name in stack
