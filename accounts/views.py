@@ -104,8 +104,9 @@ def add_to_cart(request, carpet_id, quantity = 1, redirect_to_cart=True):
     cartItem.save()
     if redirect_to_cart:
         return redirect("cart")
-    else:
-        return redirect("carpets", carpet_id=carpet.id)
+    return redirect(request.META['HTTP_REFERER'])
+    # else:
+    #     return redirect("carpets", carpet_id=carpet.id)
 
 def deduct_from_cart(request, carpet_id):
     # TODO: Number can be changed directly in the qty, handler that
