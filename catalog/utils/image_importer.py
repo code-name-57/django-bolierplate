@@ -59,6 +59,8 @@ class ImageImporter:
             qs = DesignInColor.objects.filter(design__name__startswith=model_field_values['design__name'], color__primary_color=model_field_values['color__primary_color'], color__texture_color=model_field_values['color__texture_color'])
             if qs.count()>0:
                 self.save_image_in_model(qs[0], file_path)
+                image_collection_name = self.search_collection()
+
             else:
                 # found design in color in carpet image that is not in the model.
                 # create new object then save the image there.
@@ -124,12 +126,27 @@ class ImageImporter:
         return output
         
     def search_collection(self):
+        breakpoint()
         # TODO search collection name in stack
         # NOTE: I think that storing stack is a bit confusing.
         # IMHO it would be better if we just passed the complete file path here and have the seach as a static function.
         # the same stack can be easily create by spliting the file path.
         # for mocking purpose I am return "Alvita"
+        found = self._search(Collection)
+        breakpoint()
         return "ALVITA"
+
+    def _search(self, model, filter_key="name__icontains"):
+        """
+        Searchs the model object based on name from self.stack.
+        """
+        for folder_name in reversed(self.stack):
+            filter = {filter_key: folder_name}
+            # filter = dict(filter_key=folder_name)
+            qs = model.objects.filter(**filter)
+            if qs:
+                return qs[0]
+        return
 
     def search_color(self):
         # TODO search color name in stack
