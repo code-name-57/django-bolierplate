@@ -72,6 +72,7 @@ INSTALLED_APPS = [
     'django_filters',
     'address',
     'phonenumber_field',
+    'pricing',
 ]
 
 REST_FRAMEWORK = {
