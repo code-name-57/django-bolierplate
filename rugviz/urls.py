@@ -15,6 +15,7 @@ router = routers.DefaultRouter()
 router.register(r'EnvColors', EnvColorViewset)
 router.register(r'FloorTypes', FloorTypeViewset)
 router.register(r'FloorTextures', FloorTextureViewset)
+router.register(r'CarpetPhoto', CarpetPictureViewset)
 
 urlpatterns = [
     path('rest/', include(router.urls)),

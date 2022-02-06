@@ -25,3 +25,4 @@ class FloorTypeAdmin(admin.ModelAdmin):
 admin.site.register(EnvColor, EnvColorAdmin)
 admin.site.register(FloorTexture, FloorTextureAdmin)
 admin.site.register(FloorType, FloorTypeAdmin)
+admin.site.register([CarpetPicture])
