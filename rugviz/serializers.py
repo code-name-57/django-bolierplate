@@ -16,4 +16,7 @@ class FloorTextureSerializer(serializers.ModelSerializer):
         model = FloorTexture
         exclude = []
 
-
+class CarpetPictureSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CarpetPicture
+        fields = ('id', 'carpet', 'image')

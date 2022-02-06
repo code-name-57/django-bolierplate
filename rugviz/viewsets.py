@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from .serializers import *
+from .models import *
 
 class EnvColorViewset(viewsets.ModelViewSet):
     queryset = EnvColor.objects.all()
@@ -12,3 +13,7 @@ class FloorTypeViewset(viewsets.ModelViewSet):
 class FloorTextureViewset(viewsets.ModelViewSet):
     queryset = FloorTexture.objects.all()
     serializer_class = FloorTextureSerializer
+
+class CarpetPictureViewset(viewsets.ModelViewSet):
+    queryset = CarpetPicture.objects.all()
+    serializer_class = CarpetPictureSerializer
