@@ -1,0 +1,3 @@
+[submodule "rugviz-angular"]
+	path = rugviz-angular
+	url = git@github.com:code-name-57/rugviz-angular.git
