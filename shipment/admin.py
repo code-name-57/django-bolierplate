@@ -8,7 +8,7 @@ from django import forms
 
 # Register your models here.
 from .models import *
-from .utils import spreadsheet
+from .utils.spreadsheet import PackingSheetProcessor
 class ShipmentItemTabularInline(admin.TabularInline):
     model = ShipmentItem
     readonly_fields=['barcode', 'carpet', 'carpet_size', 'quantity']
@@ -27,7 +27,9 @@ class ShipmentAdmin(admin.ModelAdmin):
             for shipment in queryset:
                 print(shipment)
                 shipment_created_count = 1
-                # shipment_created_count, error = spreadsheet.process_packing_sheet(shipment)
+                processor = PackingSheetProcessor(shipment)
+                shipment_created_count, error = processor.process_packing_sheet()
+                print(shipment_created_count, error)
                 if(shipment_created_count>0):
                     self.message_user(request, str(shipment_created_count) + " new shipment items creates", messages.SUCCESS)
                 else:
