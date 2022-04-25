@@ -1,14 +1,12 @@
 """
 This is for handling API calls b/w unity and database.
 """
-from django.contrib import admin
 from django.urls import path, include
-from django.conf import settings
-from django.conf.urls.static import static
 
 from rest_framework import routers
 
-from .viewsets import *
+from .rugviz_api.viewsets import *
+from .catalog_api.viewsets import *
 
 router = routers.DefaultRouter()
 
@@ -17,6 +15,13 @@ router.register(r'FloorTypes', FloorTypeViewset)
 router.register(r'FloorTextures', FloorTextureViewset)
 router.register(r'CarpetPhoto', CarpetPictureViewset)
 
+router.register(r'Brands', BrandViewSet)
+router.register(r'Collections', CollectionViewSet)
+router.register(r'Designs', DesignViewSet)
+router.register(r'Carpets', CarpetViewSet)
+router.register(r'Sizes', SizeViewSet)
+router.register(r'Colors', ColorViewSet)
+
 urlpatterns = [
-    path('rest/', include(router.urls)),
+    path('', include(router.urls)),
 ]

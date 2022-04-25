@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     'address',
     'phonenumber_field',
     'pricing',
+    'rest_api',
 ]
 
 REST_FRAMEWORK = {

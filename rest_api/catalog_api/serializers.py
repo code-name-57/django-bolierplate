@@ -1,4 +1,4 @@
-from .models import *
+from catalog.models import *
 from rest_framework import serializers
 
 class BrandSerializer(serializers.ModelSerializer):
