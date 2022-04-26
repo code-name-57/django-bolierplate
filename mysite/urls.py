@@ -18,6 +18,7 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
     path('admin/', admin.site.urls),
@@ -25,4 +26,8 @@ urlpatterns = [
     path('rest/', include('rest_api.urls')),
     path('', include('accounts.urls')),
     path('', include('catalog.urls')),
+    path('api/jwt-token/', TokenObtainPairView.as_view(), name='jwt_token_obtain_pair'),
+    path('api/jwt-token/refresh/', TokenRefreshView.as_view(), name='jwt_token_refresh'),
+    path('api/jwt-token/verify/', TokenVerifyView.as_view(), name='jwt_token_verify'),
+    
 ] + static(settings.MEDIA_URL, document_root= settings.MEDIA_ROOT)
