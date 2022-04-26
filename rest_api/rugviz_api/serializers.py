@@ -1,4 +1,4 @@
-from .models import *
+from rugviz.models import *
 from rest_framework import serializers
 
 class EnvColorSerializer(serializers.ModelSerializer):

@@ -1,8 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from address.models import AddressField
-from django.db.models.enums import Choices
-from django.forms.models import ModelForm
 from catalog.models import Carpet
 from phonenumber_field.modelfields import PhoneNumberField
 
@@ -69,3 +66,27 @@ class OrderItem(models.Model):
     quantity = models.PositiveIntegerField(default=1)
     unit_price = models.DecimalField(default = 0.0, max_digits = 10, decimal_places=2)
     carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
+
+
+class FavoriteList(models.Model):
+    """ Used to map the user to its favorites. """
+    customer_name = models.TextField() # End customer seeking rug for its home.
+    store_user = models.ForeignKey(User, on_delete=models.CASCADE)
+    # TODO: fix ph no and email, either one is required
+    customer_phone_number = PhoneNumberField(blank=True)
+    customer_email = models.EmailField(max_length=254, blank=True)
+
+
+class FavoriteItem(models.Model):
+    """
+    Favorite item is as collection of the images. This can be a simple image
+    of the carpet or the image of the complete scene.
+    """
+    favorite_list = models.ForeignKey(FavoriteList, on_delete=models.CASCADE)
+    carpet = models.ForeignKey(Carpet, on_delete=models.CASCADE)
+
+
+class SceneImage(models.Model):
+    """ Stores a scene image. """
+    favorite_item = models.ForeignKey(FavoriteItem, on_delete=models.CASCADE)
+    image_file = models.ImageField(upload_to='catalog/Favorites')

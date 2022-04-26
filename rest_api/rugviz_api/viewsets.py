@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .serializers import *
-from .models import *
+from rugviz.models import *
 
 class EnvColorViewset(viewsets.ModelViewSet):
     queryset = EnvColor.objects.all()
