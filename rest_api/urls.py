@@ -23,7 +23,7 @@ router.register(r'Carpets', CarpetViewSet)
 router.register(r'Sizes', SizeViewSet)
 router.register(r'Colors', ColorViewSet)
 
-router.register(r'FavoriteList', FavoriteListViewSet)
+router.register(r'FavoriteList', FavoriteListViewSet, basename='FavoriteList')
 router.register(r'FavoriteItem', FavoriteItemViewSet)
 router.register(r'SceneImage', SceneImageViewSet)
 
