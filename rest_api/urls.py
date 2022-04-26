@@ -7,6 +7,7 @@ from rest_framework import routers
 
 from .rugviz_api.viewsets import *
 from .catalog_api.viewsets import *
+from .favorites_api.viewsets import *
 
 router = routers.DefaultRouter()
 
@@ -21,6 +22,10 @@ router.register(r'Designs', DesignViewSet)
 router.register(r'Carpets', CarpetViewSet)
 router.register(r'Sizes', SizeViewSet)
 router.register(r'Colors', ColorViewSet)
+
+router.register(r'FavoriteList', FavoriteListViewSet)
+router.register(r'FavoriteItem', FavoriteItemViewSet)
+router.register(r'SceneImage', SceneImageViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
